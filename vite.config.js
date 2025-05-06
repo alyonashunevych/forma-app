@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
+  base: "/forma-app/",
   resolve: {
     alias: {
       src: path.resolve(__dirname, "./src"),
