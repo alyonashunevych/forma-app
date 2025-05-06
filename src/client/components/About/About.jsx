@@ -6,7 +6,7 @@ import quoteright from "../../../images/quote-right.svg";
 
 export function About() {
   return (
-    <div className="about" id='about'>
+    <section className="about" id="about">
       <div className="about__first-screen">
         <div className="about__description">
           <p className="about__text">
@@ -88,6 +88,6 @@ export function About() {
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

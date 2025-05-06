@@ -3,7 +3,7 @@ import img from "../../../images/howitworks-img.png";
 
 export function HowItWorks() {
   return (
-    <div className="how-it-works" id="how-it-works">
+    <section className="how-it-works" id="how-it-works">
       <div className="how-it-works__content">
         <div className="how-it-works__title">
           <h2 className="how-it-works__title__normal">How it </h2>
@@ -43,6 +43,6 @@ export function HowItWorks() {
       </div>
 
       <img src={img} alt="Uniform for sports" className="how-it-works__img" />
-    </div>
+    </section>
   );
 }

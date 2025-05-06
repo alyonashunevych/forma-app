@@ -3,7 +3,7 @@ import arrow from "../../../images/main-but-arrow.svg";
 
 export function Main() {
   return (
-    <div className="main">
+    <section className="main" id="main">
       <h1 className="main__title">
         Your Fitness Journey Starts{" "}
         <span className="main__title--italic">Here</span>
@@ -37,6 +37,6 @@ export function Main() {
           progress tracking
         </p>
       </div>
-    </div>
+    </section>
   );
 }

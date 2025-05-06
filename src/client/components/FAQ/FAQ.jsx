@@ -40,7 +40,7 @@ export function FAQ() {
   ];
 
   return (
-    <div className="faq" id="faq">
+    <section className="faq" id="faq">
       <h1 className="faq__title">FAQ</h1>
 
       <img src={img} alt="Uniform for sports" className="faq__img" />
@@ -78,6 +78,6 @@ export function FAQ() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
