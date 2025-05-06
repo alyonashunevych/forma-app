@@ -4,7 +4,7 @@ import './App.scss';
 
 export function App() {
   return (
-    <Router>
+    <Router basename="/forma-app">
       <Routes>
         <Route path="/" element={<Welcome />} />
         {/* <Route path="/signup" element={<SignUp />} />

@@ -6,7 +6,7 @@ import quoteright from "../../../images/quote-right.svg";
 
 export function About() {
   return (
-    <div className="about">
+    <div className="about" id='about'>
       <div className="about__first-screen">
         <div className="about__description">
           <p className="about__text">

@@ -5,6 +5,7 @@
   gap: 3.69vw;
   padding-inline: $inline-padding;
   padding-bottom: $inline-padding;
+  scroll-margin-top: $header-height + 1vw;
 
   &__title {
     font-family: $title-font-italic;

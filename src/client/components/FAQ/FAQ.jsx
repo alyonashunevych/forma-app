@@ -40,7 +40,7 @@ export function FAQ() {
   ];
 
   return (
-    <div className="faq">
+    <div className="faq" id="faq">
       <h1 className="faq__title">FAQ</h1>
 
       <img src={img} alt="Uniform for sports" className="faq__img" />

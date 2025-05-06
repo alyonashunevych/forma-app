@@ -10,7 +10,7 @@ export default defineConfig({
   base: "/forma-app/",
   resolve: {
     alias: {
-      src: path.resolve(__dirname, "./src"),
+      src: "/src",
     },
   },
   css: {

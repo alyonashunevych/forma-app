@@ -5,16 +5,18 @@ export function Header() {
   return (
     <header className="header">
       <nav className="navigation">
-        <img src={logo} alt="logo" className="header__logo" />
+        <a href="#">
+          <img src={logo} alt="logo" className="header__logo" />
+        </a>
 
         <ul className="navigation__list">
           <li className="navigation__item">
-            <a href="#" className="navigation__link">
+            <a href="#about" className="navigation__link">
               About
             </a>
           </li>
           <li className="navigation__item">
-            <a href="#" className="navigation__link">
+            <a href="#how-it-works" className="navigation__link">
               How It Works
             </a>
           </li>
@@ -24,7 +26,7 @@ export function Header() {
             </a>
           </li>
           <li className="navigation__item">
-            <a href="#" className="navigation__link">
+            <a href="#faq" className="navigation__link">
               FAQ
             </a>
           </li>
