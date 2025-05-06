@@ -6,9 +6,21 @@ $header-height: 4.0625vw;
 
 $dark-blue: #0e1324;
 $dark-blue-translucent: #0e13245a;
+
+$black-translucents: ();
+
+@for $i from 1 through 100 {
+  $key: $i * 5;
+  $value: rgba(0, 0, 0, $i * 0.05);
+  $black-translucents: map-merge($black-translucents, ($key: $value)) !global;
+}
+
+
 $bright-yellow: #e7f461;
 $soft-yellow: #f3f9b0;
 $bg-color: #eaeaea;
+$bg-color-translucent: #eaeaea87;
+$bg-login-color: #FDFCFA;
 
 $main-text-size: 0.9vw;
 
@@ -19,29 +31,7 @@ $title-font-italic: "Condiment", sans-serif;
 
 $transition: all 0.4s;
 
-@mixin on-bigger-desktop {
-  @media (min-width: $desktop-max-width) {
-    @content;
-  }
-}
-
-@mixin on-standart-desktop {
-  @media (max-width: $desktop-width) and (min-width: 12.5vw) {
-    @content;
-  }
-}
-
 @mixin transition-transform($value) {
   transition: transform 0.3s;
   transform: $value;
-}
-
-@include on-standart-desktop {
-  body {
-    background-color: red;
-  }
-}
-
-@include on-bigger-desktop {
-  $header-height: 10vh;
 }

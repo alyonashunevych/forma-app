@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Welcome } from "./client/pages/Welcome/Welcome";
 import "./App.scss";
 import { UpdateURLOnScroll } from "./client/components/utils/UpdateURLOnScroll";
+import { LogIn } from "./client/pages/LogIn/LogIn";
 
 export function App() {
   return (
@@ -10,10 +11,10 @@ export function App() {
       <Router basename="/forma-app">
         <Routes>
           <Route path="/" element={<Welcome />} />
-          {/* <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="*" element={<NotFound />} /> */}
+          {/* <Route path="/signup" element={<SignUp />} /> */}
+          <Route path="/login" element={<LogIn />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </Router>
     </>

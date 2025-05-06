@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Header.scss";
 import logo from "../../../images/logo.svg";
 
@@ -33,7 +34,9 @@ export function Header() {
         </ul>
       </nav>
       <div className="header__buttons">
-        <button className="header__button__login"></button>
+        <Link to="/login">
+          <button className="header__button__login"></button>
+        </Link>
         <button className="header__button__signup">Sign Up</button>
       </div>
     </header>
