@@ -1,0 +1,84 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.89vw $inline-padding;
+  background-color: $dark-blue;
+  color: white;
+  height: $header-height;
+
+  &__logo {
+    width: 5vw;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.04vw;
+  }
+
+  &__button__signup {
+    padding: 0 0.57vw;
+    height: 1.82vw;
+    border-radius: 2.60vw;
+    background-color: $bright-yellow;
+    border: none;
+    color: black;
+    font-size: 0.78vw;
+    font-weight: 600;
+    font-family: $main-text-font;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $soft-yellow;
+      
+    }
+  }
+
+  &__button__login {
+    height: 1.56vw;
+    width: 1.56vw;
+    background-image: url("../../../images/login.svg");
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 3.125vw;
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    gap: 1.04vw;
+  }
+
+  &__item {
+    list-style: none;
+    font-size: $main-text-size;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: $main-text-font;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: white;
+
+    &:hover {
+      color: $bright-yellow;
+    }
+  }
+}

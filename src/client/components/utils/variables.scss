@@ -1,0 +1,47 @@
+$inline-padding: 8.75vw;
+$desktop-max-width: 120vw;
+$desktop-width: 90vw;
+
+$header-height: 4.0625vw;
+
+$dark-blue: #0e1324;
+$dark-blue-translucent: #0e13245a;
+$bright-yellow: #e7f461;
+$soft-yellow: #f3f9b0;
+$bg-color: #eaeaea;
+
+$main-text-size: 0.9vw;
+
+$main-text-font: "Montserrat", sans-serif;
+
+$title-font: "League Gothic", sans-serif;
+$title-font-italic: "Condiment", sans-serif;
+
+$transition: all 0.4s;
+
+@mixin on-bigger-desktop {
+  @media (min-width: $desktop-max-width) {
+    @content;
+  }
+}
+
+@mixin on-standart-desktop {
+  @media (max-width: $desktop-width) and (min-width: 12.5vw) {
+    @content;
+  }
+}
+
+@mixin transition-transform($value) {
+  transition: transform 0.3s;
+  transform: $value;
+}
+
+@include on-standart-desktop {
+  body {
+    background-color: red;
+  }
+}
+
+@include on-bigger-desktop {
+  $header-height: 10vh;
+}

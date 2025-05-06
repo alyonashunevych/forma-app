@@ -1,0 +1,16 @@
+@mixin on-bigger-desktop {
+  @media (min-width: $desktop-max-width) {
+    @content;
+  }
+}
+
+@mixin on-standart-desktop {
+  @media (max-width: $desktop-width) and (min-width: 200px) {
+    @content;
+  }
+}
+
+@mixin transition-transform($value) {
+  transition: transform 0.3s;
+  transform: $value;
+}

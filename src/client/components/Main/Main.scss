@@ -1,0 +1,112 @@
+.main {
+  display: flex;
+  margin-top: $header-height;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3.13vw $inline-padding;
+  height: calc(100vh - $header-height);
+  background-image: url("../../../images/main-bg.png");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  font-family: $main-text-font;
+  font-size: $main-text-size;
+
+  &__title {
+    font-size: 6.77vw;
+    width: 36.46vw;
+    line-height: 5.73vw;
+    font-weight: 500;
+    font-family: $title-font;
+    color: $bright-yellow;
+
+    &--italic {
+      font-family: $title-font-italic;
+      font-size: 6.25vw;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-self: flex-end;
+    flex-direction: column;
+    gap: 1.04vw;
+    width: 28.13vw;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 2.08vw;
+  }
+
+  &__button {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.89vw;
+    height: 3.02vw;
+    border-radius: 2.60vw;
+    border: none;
+    font-size: $main-text-size;
+    font-weight: 600;
+    font-family: $main-text-font;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &__start {
+      padding: 1.04vw 0.36vw 1.04vw 1.20vw;
+      background-color: $dark-blue;
+      color: $bright-yellow;
+
+      &:hover .main__button__arrow {
+        animation: moveArrow 0.5s infinite alternate;
+      }
+
+      &__circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2.34vw;
+        width: 2.34vw;
+        background-image: url("../../../images/main-but-circle.svg");
+        background-size: cover;
+        background-position: center;
+      }
+    }
+
+    &__arrow {
+      height: 0.78vw;
+      position: relative;
+      transition: transform 0.5s ease-out;
+    }
+
+    &__explore {
+      padding: 1.04vw 1.20vw;
+      background-color: $bright-yellow;
+      color: $dark-blue;
+
+      &:hover .main__button__arrow {
+        animation: moveArrow 0.5s infinite alternate;
+      }
+    }
+  }
+
+  &__description {
+    font-size: 1.04vw;
+    font-weight: 500;
+    width: 100%;
+    color: white;
+  }
+
+  @keyframes moveArrow {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(0.52vw);
+    }
+  }
+}

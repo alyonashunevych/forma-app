@@ -1,0 +1,133 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6.25vw $inline-padding;
+  padding-bottom: 7.5vw;
+  gap: $inline-padding;
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    z-index: 1;
+    width: max-content;
+    gap: 0.5625vw;
+
+    &__normal {
+      font-size: 5.5vw;
+      line-height: 6.25vw;
+      font-weight: 500;
+      font-family: $title-font;
+      color: $dark-blue;
+    }
+
+    &__italic {
+      z-index: 2;
+      margin-top: 1.5vw;
+      font-family: $title-font-italic;
+      font-size: 6.875vw;
+      line-height: 5.625vw;
+      color: $dark-blue;
+      -webkit-text-stroke: 0.1875vw $bg-color;
+      paint-order: stroke fill;
+    }
+  }
+
+  &__first-img {
+    width: 27.125vw;
+    margin-top: 3.25vw;
+  }
+
+  &__second-img {
+    height: 30vw;
+  }
+
+  &__title-img-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vw;
+    width: 17.8vw;
+    margin-top: 9.375vw;
+    margin-bottom: 1.875vw;
+
+    &--bottom {
+      margin-top: 16.875vw;
+    }
+
+    &--wider {
+      width: 21vw;
+      margin-top: 0;
+      margin-right: 5.5vw;
+    }
+  }
+
+  &__text {
+    font-size: $main-text-size;
+    font-weight: 550;
+    font-family: $main-text-font;
+  }
+
+  &__first-screen {
+    display: flex;
+    flex-direction: row;
+    gap: 5vw;
+  }
+
+  &__second-screen {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.quote {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+
+  &__text {
+    font-size: 4.0625vw;
+    font-family: $title-font;
+    color: $dark-blue;
+    max-width: 76.25vw;
+    text-align: justify;
+    line-height: 5.625vw;
+    margin-right: 1.25vw;
+
+    &__italic {
+      font-family: $title-font-italic;
+      font-size: 4.0625vw;
+      line-height: 3.75vw;
+      color: $dark-blue;
+    }
+  }
+
+  &__symbol {
+    position: absolute;
+    width: 2.25938vw;
+    height: 2.25938vw;
+
+    &--left {
+      left: 0;
+      top: 0;
+    }
+
+    &--right {
+      right: 0;
+      bottom: 2.5vw;
+    }
+  }
+}
