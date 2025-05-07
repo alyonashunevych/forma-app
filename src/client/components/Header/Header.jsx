@@ -37,7 +37,9 @@ export function Header() {
         <Link to="/login">
           <button className="header__button__login"></button>
         </Link>
-        <button className="header__button__signup">Sign Up</button>
+        <Link to="/signup">
+          <button className="header__button__signup">Sign Up</button>
+        </Link>
       </div>
     </header>
   );

@@ -1,4 +1,4 @@
-.login {
+.signup {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -93,10 +93,19 @@
     flex-direction: column;
     gap: 1.25vw;
 
+    &__name {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 1.25vw;
+      width: 100%;
+    }
+
     &__label {
       font-family: $main-text-font;
       font-size: 1.125vw;
       font-weight: 550;
+      width: 100%;
     }
 
     &__input {
@@ -161,7 +170,7 @@
       text-transform: uppercase;
       font-weight: 550;
       height: 3.75vw;
-      margin-top: 1.25vw;
+      margin-top: 1.6vw;
       cursor: pointer;
       border: none;
 
@@ -175,7 +184,7 @@
     }
   }
 
-  &__signup {
+  &__login {
     display: flex;
     flex-direction: row;
     align-items: center;

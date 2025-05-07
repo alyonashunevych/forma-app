@@ -5,14 +5,16 @@ $desktop-width: 90vw;
 $header-height: 4.0625vw;
 
 $dark-blue: #0e1324;
-$dark-blue-translucent: #0e13245a;
 
 $black-translucents: ();
+$dark-blue-translucents: ();
 
 @for $i from 1 through 100 {
   $key: $i * 5;
-  $value: rgba(0, 0, 0, $i * 0.05);
-  $black-translucents: map-merge($black-translucents, ($key: $value)) !global;
+  $value-black: rgba(0, 0, 0, $i * 0.05);
+  $value-blue: rgba(14, 19, 36, $i * 0.05);
+  $black-translucents: map-merge($black-translucents, ($key: $value-black)) !global;
+  $dark-blue-translucents: map-merge($dark-blue-translucents, ($key: $value-blue)) !global;
 }
 
 

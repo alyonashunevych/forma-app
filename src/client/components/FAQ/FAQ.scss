@@ -26,7 +26,7 @@
     justify-content: space-between;
     gap: 1.04vw;
     cursor: pointer;
-    border-top: 0.15vw solid $dark-blue-translucent;
+    border-top: 0.15vw solid map-get($dark-blue-translucents, 60);
     width: 100%;
     padding: 1.25vw 2.5vw;
 

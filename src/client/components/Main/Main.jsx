@@ -1,5 +1,6 @@
 import "./Main.scss";
 import arrow from "../../../images/main-but-arrow.svg";
+import { Link } from "react-router-dom";
 
 export function Main() {
   return (
@@ -11,25 +12,21 @@ export function Main() {
 
       <div className="main__content">
         <div className="main__buttons">
-          <button className="main__button main__button__start">
-            Start for Free
-            <div className="main__button__start__circle">
-              <img
-                src={arrow}
-                alt="arrow"
-                className="main__button__arrow"
-              />
-            </div>
-          </button>
+          <Link to="/signup">
+            <button className="main__button main__button__start">
+              Start for Free
+              <div className="main__button__start__circle">
+                <img src={arrow} alt="arrow" className="main__button__arrow" />
+              </div>
+            </button>
+          </Link>
 
-          <button className="main__button main__button__explore">
-            Explore Features
-            <img
-              src={arrow}
-              alt="arrow"
-              className="main__button__arrow"
-            />
-          </button>
+          <a href="#faq">
+            <button className="main__button main__button__explore">
+              Explore Features
+              <img src={arrow} alt="arrow" className="main__button__arrow" />
+            </button>
+          </a>
         </div>
 
         <p className="main__description">
