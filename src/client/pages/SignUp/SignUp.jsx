@@ -59,7 +59,7 @@ export function SignUp() {
           <div className="signup__or__line"></div>
         </div>
 
-        <form className="signup__form" onSubmit={handleSubmit}>
+        <form className="signup__form" onSubmit={handleSubmit} method="post">
           <div className="signup__form__name">
             <label className="signup__form__label">
               Name

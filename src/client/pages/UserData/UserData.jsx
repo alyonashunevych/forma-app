@@ -53,7 +53,7 @@ export function UserData() {
           Let’s personalize your training plan by understanding your body
         </p>
 
-        <form className="user-data__form" onSubmit={handleSubmit}>
+        <form className="user-data__form" onSubmit={handleSubmit} method="post">
           <div className="user-data__form__params">
             <label className="user-data__form__label">
               Age

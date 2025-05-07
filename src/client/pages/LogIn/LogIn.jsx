@@ -59,7 +59,7 @@ export function LogIn() {
           <div className="login__or__line"></div>
         </div>
 
-        <form className="login__form" onSubmit={handleSubmit}>
+        <form className="login__form" onSubmit={handleSubmit} method="post">
           <label className="login__form__label">
             Email
             <input
