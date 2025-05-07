@@ -3,11 +3,18 @@ import img from "../../../images/signup-img.png";
 import logo from "../../../images/logo-black.svg";
 import google from "../../../images/google.svg";
 import apple from "../../../images/apple.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export function SignUp() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Form submitted");
+    navigate("/user-data");
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,7 +59,7 @@ export function SignUp() {
           <div className="signup__or__line"></div>
         </div>
 
-        <form className="signup__form">
+        <form className="signup__form" onSubmit={handleSubmit}>
           <div className="signup__form__name">
             <label className="signup__form__label">
               Name

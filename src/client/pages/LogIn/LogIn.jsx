@@ -3,11 +3,18 @@ import img from "../../../images/login-img.png";
 import logo from "../../../images/logo-black.svg";
 import google from "../../../images/google.svg";
 import apple from "../../../images/apple.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export function LogIn() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Form submitted");
+    navigate("/app-dashboard");
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,7 +59,7 @@ export function LogIn() {
           <div className="login__or__line"></div>
         </div>
 
-        <form className="login__form">
+        <form className="login__form" onSubmit={handleSubmit}>
           <label className="login__form__label">
             Email
             <input

@@ -1,4 +1,6 @@
-.signup {
+@import "choices.js/src/styles/choices";
+
+.user-data {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -92,8 +94,17 @@
     display: flex;
     flex-direction: column;
     gap: 1.25vw;
+    margin-top: 2.5vw;
 
-    &__name {
+    &__text {
+      font-family: $main-text-font;
+      font-size: $main-text-size;
+      color: map-get($black-translucents, 60);
+      font-weight: 550;
+      margin-top: -0.7vw;
+    }
+
+    &__params {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -106,6 +117,43 @@
       font-size: 1.125vw;
       font-weight: 550;
       width: 100%;
+    }
+
+    &__select {
+      color: map-get($black-translucents, 50);
+
+      &:hover {
+        outline: none;
+        border: 0.15vw solid map-get($dark-blue-translucents, 60);
+      }
+      &:focus {
+        outline: none;
+        border: 0.15vw solid $dark-blue;
+      }
+
+      &__option {
+        font-family: $main-text-font;
+        font-size: $main-text-size;
+        color: map-get($black-translucents, 50);
+        font-weight: 550;
+      }
+
+      &__control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.25vw;
+        border: 0.15vw solid map-get($black-translucents, 10);
+        border-radius: 1.25vw;
+        gap: 0.94vw;
+        margin-top: 0.63vw;
+        height: 3.75vw;
+        font-family: $main-text-font;
+        font-size: $main-text-size;
+        color: black;
+        font-weight: 550;
+        width: 100%;
+      }
     }
 
     &__input {
@@ -122,7 +170,6 @@
       font-size: $main-text-size;
       color: black;
       font-weight: 550;
-
       width: 100%;
 
       &::placeholder {
@@ -209,6 +256,95 @@
 
     &__link {
       text-decoration: none;
+    }
+  }
+}
+
+.choices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.75vw;
+  margin-top: 0.63vw;
+  border-radius: 1.25vw;
+  border: 0.15vw solid map-get($black-translucents, 10);
+  background-color: white;
+
+  &:hover {
+    outline: none;
+    border: 0.15vw solid map-get($dark-blue-translucents, 60);
+  }
+
+  &:focus {
+    outline: none;
+    border: 0.15vw solid $dark-blue;
+  }
+
+  &[data-type*="select-one"]::after {
+    content: "" !important;
+    display: block;
+    border: none;
+    top: 55%;
+    right: 1vw;
+    width: 1vw;
+    height: 0.5vw;
+    background-image: url("../../../images/faq-arrow.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+  }
+
+  &.is-open::after {
+    transform: rotate(180deg);
+  }
+
+  &__inner {
+    top: -0.5vw;
+    display: flex;
+    align-items: center;
+    height: 3.75vw;
+    font-family: $main-text-font;
+    font-size: $main-text-size;
+    color: map-get($black-translucents, 50);
+    border: none;
+    border-radius: 1.25vw;
+
+    font-weight: 550;
+    padding: 0px !important;
+    background-color: transparent;
+  }
+
+  &__list {
+    width: 100%;
+    height: min-content;
+
+    &--single {
+      padding: 1.25vw;
+    }
+
+    &--dropdown {
+      background-color: map-get($black-translucents, 50);
+    }
+  }
+
+  &__placeholder {
+    font-family: $main-text-font;
+    font-size: $main-text-size;
+    color: map-get($black-translucents, 70);
+    font-weight: 550;
+  }
+
+  &__item {
+    font-family: $main-text-font;
+    color: map-get($black-translucents, 100);
+    font-weight: 550;
+    cursor: pointer;
+    font-size: $main-text-size !important;
+
+    &--selectable {
+      font-family: $main-text-font;
     }
   }
 }
