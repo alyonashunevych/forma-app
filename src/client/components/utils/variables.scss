@@ -19,10 +19,24 @@ $dark-blue-translucents: ();
 
 
 $bright-yellow: #e7f461;
+$bright-blue: #9F9ADF;
+$bright-purple: #C19ADF;
+
 $soft-yellow: #f3f9b0;
+$soft-yellow-translucents: #f5f9c5;
+$soft-green: #CADD98;
+$soft-red: #E5B3A5;
+$soft-blue: #BCC2D4;
+$soft-orange: #F0DBA0;
+$soft-purple: #D3BDE3;
+
 $bg-color: #eaeaea;
 $bg-color-translucent: #eaeaea87;
-$bg-login-color: #FDFCFA;
+$soft-white: #FDFCFA;
+
+$border-radius: 1.25vw;
+$gap: 1.5vw;
+$box-shadow: 0px 0px 1.25vw map-get($black-translucents, 10);
 
 $main-text-size: 0.9vw;
 

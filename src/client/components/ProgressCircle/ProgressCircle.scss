@@ -1,0 +1,99 @@
+.progress-circle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: min-content;
+  padding: 1.25vw 1.87vw;
+  gap: 2.25vw;
+  border-radius: $border-radius;
+  background-color: $soft-white;
+  box-shadow: $box-shadow;
+
+  
+
+  &__svg {
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+    width: 11.5vw;
+    height: 11.5vw;
+  }
+
+  &__background {
+    fill: none;
+    stroke: #e6e6e6; /* Колір фону */
+    stroke-width: 3;
+  }
+
+  &__progress {
+    fill: none;
+    stroke: $bright-blue;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 30;
+    stroke-dashoffset: 30;
+    transition: stroke-dasharray 2s ease-in-out;
+
+    &--small {
+      stroke: $bright-purple;
+    }
+  }
+
+  &__information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.31vw;
+    width: 11vw;
+
+    &__title,
+    &__training__title,
+    &__training__value {
+      font-size: $main-text-size;
+      font-family: $main-text-font;
+      font-weight: 550;
+      color: map-get($black-translucents, 70);
+    }
+
+    &__training {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      gap: 0.7vw;
+      align-self: flex-start;
+
+      &__color {
+        width: 1.25vw;
+        height: 1.25vw;
+        border-radius: 100%;
+
+        &--blue {
+          background-color: $bright-blue;
+        }
+        &--purple {
+          background-color: $bright-purple;
+        }
+      }
+
+      &__text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__value {
+        font-size: 0.8vw;
+        color: map-get($black-translucents, 50);
+      }
+    }
+  }
+
+  &__text {
+    font-size: 3.1vw;
+    font-family: $main-text-font;
+    font-weight: 550;
+    color: map-get($black-translucents, 80);
+    width: 100%;
+    text-align: center;
+  }
+}

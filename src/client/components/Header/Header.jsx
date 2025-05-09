@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Header.scss";
 import logo from "../../../images/logo.svg";
+import login from "../../../images/login.svg";
 
 export function Header() {
   return (
@@ -35,8 +36,9 @@ export function Header() {
       </nav>
       <div className="header__buttons">
         <Link to="/login">
-          <button className="header__button__login"></button>
+          <img className="header__button__login" src={login} alt="login icon" />
         </Link>
+
         <Link to="/signup">
           <button className="header__button__signup">Sign Up</button>
         </Link>

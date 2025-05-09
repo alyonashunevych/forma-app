@@ -15,12 +15,14 @@
 
   &__logo {
     width: 5vw;
+    user-select: none;
   }
 
   &__buttons {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: 1.04vw;
   }
 
@@ -43,12 +45,7 @@
   }
 
   &__button__login {
-    height: 1.56vw;
-    width: 1.56vw;
-    background-image: url("../../../images/login.svg");
-    background-size: cover;
-    background-color: transparent;
-    border: none;
+    height: 1.7vw;
     cursor: pointer;
   }
 }

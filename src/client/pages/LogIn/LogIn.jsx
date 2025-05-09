@@ -13,7 +13,7 @@ export function LogIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Form submitted");
-    navigate("/app-dashboard");
+    navigate("/home/dashboard");
   };
 
   useEffect(() => {

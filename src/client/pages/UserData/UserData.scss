@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  background-color: $bg-login-color;
+  background-color: $soft-white;
 
   &__img {
     width: 50vw;
@@ -22,7 +22,7 @@
   &__logo {
     display: inline-block;
     margin: 0 auto;
-    cursor: pointer;
+    user-select: none;
 
     &-img {
       width: 6.7vw;
@@ -56,7 +56,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.94vw;
-    border-radius: 1.25vw;
+    border-radius: $border-radius;
     border: 0.15vw solid map-get($black-translucents, 10);
     background: $bg-color-translucent;
     padding: 0.94vw 0;
@@ -144,7 +144,7 @@
         justify-content: center;
         padding: 1.25vw;
         border: 0.15vw solid map-get($black-translucents, 10);
-        border-radius: 1.25vw;
+        border-radius: $border-radius;
         gap: 0.94vw;
         margin-top: 0.63vw;
         height: 3.75vw;
@@ -161,7 +161,7 @@
       align-items: center;
       justify-content: center;
       padding: 1.25vw;
-      border-radius: 1.25vw;
+      border-radius: $border-radius;
       border: 0.15vw solid map-get($black-translucents, 10);
       gap: 0.94vw;
       margin-top: 0.63vw;
@@ -208,7 +208,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 1.25vw;
+      border-radius: $border-radius;
       background: $dark-blue;
       padding: 0.94vw 0;
       font-family: $main-text-font;
@@ -266,7 +266,7 @@
   justify-content: center;
   height: 3.75vw;
   margin-top: 0.63vw;
-  border-radius: 1.25vw;
+  border-radius: $border-radius;
   border: 0.15vw solid map-get($black-translucents, 10);
   background-color: white;
 
@@ -309,7 +309,7 @@
     font-size: $main-text-size;
     color: map-get($black-translucents, 50);
     border: none;
-    border-radius: 1.25vw;
+    border-radius: $border-radius;
 
     font-weight: 550;
     padding: 0px !important;
