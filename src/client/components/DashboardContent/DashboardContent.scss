@@ -1,5 +1,9 @@
 .dashboard-content {
-  display: flex;
-  flex-direction: row;
-  gap: $gap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 14vw 14vw;
+  flex-direction: dense;
+  justify-content: center;
+  gap: 1.25vw;
+
 }

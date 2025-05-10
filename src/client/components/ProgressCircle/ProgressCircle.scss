@@ -4,12 +4,15 @@
   justify-content: center;
   width: min-content;
   padding: 1.25vw 1.87vw;
-  gap: 2.25vw;
+  gap: 2vw;
   border-radius: $border-radius;
   background-color: $soft-white;
   box-shadow: $box-shadow;
   height: 14vw;
-  
+  width: 100%;
+
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
 
   &__svg {
     top: 0;
@@ -21,7 +24,7 @@
 
   &__background {
     fill: none;
-    stroke: #e6e6e6; /* Колір фону */
+    stroke: map-get($black-translucents, 10);
     stroke-width: 3;
   }
 
@@ -45,7 +48,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.31vw;
-    width: 11vw;
+    width: 13vw;
 
     &__title,
     &__training__title,
@@ -79,6 +82,7 @@
       &__text {
         display: flex;
         flex-direction: column;
+        width: max-content;
       }
 
       &__value {

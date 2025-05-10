@@ -1,31 +1,54 @@
-.exercise-card {
+.next-workout {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   width: min-content;
-  padding: 1.25vw 0.5vw;
+  padding: 1.25vw;
   border-radius: $border-radius;
   background-color: $soft-white;
   box-shadow: $box-shadow;
   width: 100%;
 
-  grid-column: 1 / 2;
+  grid-column: 4 / 5;
   grid-row: 1 / 2;
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1vw;
-  }
 
-  &__name,
-  &__value,
-  &__key {
+  &__title,
+  &__training__details,
+  &__day,
+  &__month-year,
+  &__training__type {
     font-size: $main-text-size;
     font-family: $main-text-font;
     font-weight: 550;
     color: map-get($black-translucents, 70);
+    text-align: center;
+  }
+
+  &__day {
+    color: black;
+    font-size: 3.125vw;
+    line-height: 3vw;
+  }
+
+  &__month-year {
+    color: black;
+    font-size: 1.25vw;
+  }
+
+  &__training {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &__type {
+      font-size: 0.8vw;
+    }
+
+    &__details {
+      color: map-get($black-translucents, 60);
+    }
   }
 
   &__value {

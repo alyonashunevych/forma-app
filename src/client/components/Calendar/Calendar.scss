@@ -1,0 +1,97 @@
+.calendar {
+  display: flex;
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+  width: 100%;
+
+  flex-direction: column;
+  background-color: $soft-white;
+  border-radius: $border-radius;
+  padding: 1.25vw;
+  box-shadow: $box-shadow;
+  height: 100vh;
+
+  &__profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    &__title {
+      font-family: $main-text-font;
+      font-size: 1.125vw;
+      color: map-get($black-translucents, 70);
+      font-weight: 550;
+    }
+
+    &__icon {
+      height: 1.35vw;
+      opacity: 0.6;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.94vw;
+    margin-top: 1.25vw;
+
+    &__photo {
+      height: 4.375vw;
+      width: 4.375vw;
+      border-radius: 100%;
+    }
+
+    &__name {
+      font-family: $main-text-font;
+      font-size: 1.25vw;
+      font-weight: 550;
+    }
+
+    &__params {
+      display: flex;
+      flex-direction: row;
+      gap: 0.63vw;
+
+      &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.63vw;
+      }
+
+      &__key {
+        font-family: $main-text-font;
+        font-size: 0.8vw;
+        color: map-get($black-translucents, 60);
+        font-weight: 550;
+      }
+
+      &__value {
+        display: flex;
+        padding: 0.56vw 1vw;
+        border-radius: $border-radius;
+
+        &__text {
+          font-family: $main-text-font;
+          font-size: $main-text-size;
+          font-weight: 550;
+        }
+
+        &--blue {
+          background-color: $soft-blue;
+        }
+        &--green {
+          background-color: $soft-green;
+        }
+        &--orange {
+          background-color: $soft-orange;
+        }
+      }
+    }
+  }
+}
