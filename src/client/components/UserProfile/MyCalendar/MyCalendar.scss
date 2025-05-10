@@ -1,0 +1,206 @@
+.react-calendar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2vw;
+  border-radius: $border-radius;
+  border: none;
+  padding: 0.7vw 1.25vw 1.25vw;
+  box-shadow: $box-shadow inset;
+  width: 100%;
+  background-color: $soft-white;
+
+  &__icon {
+    height: 0.9vw;
+    user-select: none;
+
+    &--left {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    margin-bottom: 0.5vw;
+
+    & button {
+      all: unset;
+      padding: 0.7vw;
+      height: fit-content;
+      border-radius: $border-radius;
+      transition: 0.2s;
+    }
+
+    &__label {
+      flex-grow: 0 !important;
+
+      &__labelText {
+        font-family: $main-text-font;
+        font-size: $main-text-size;
+        font-weight: 550;
+      }
+    }
+  }
+
+  .user-profile &__tile {
+    display: flex;
+    flex: none !important;
+    height: 2vw;
+    width: 2vw;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    font-family: $main-text-font;
+    font-size: 0.8vw;
+    font-weight: 550;
+    color: map-get($black-translucents, 60);
+    background-color: $bg-color;
+    border-radius: $border-radius;
+    justify-content: center;
+    transition: 0.2s;
+
+    &:hover {
+      background-color: $soft-yellow-translucents !important;
+      color: black;
+      box-shadow: 0 0 0 0.25vw $soft-yellow-translucents;
+    }
+
+    &--active {
+      background-color: $soft-yellow-translucents !important;
+      color: black;
+
+      &:hover {
+        color: black;
+        box-shadow: 0 0 0 0.25vw $soft-yellow-translucents;
+      }
+    }
+
+    &--now {
+      color: black;
+      font-weight: 700;
+    }
+  }
+
+  &__month-view {
+    &__weekdays {
+      display: grid !important;
+      justify-self: center;
+      gap: 0.6vw;
+      grid-template-columns: repeat(7, 1fr);
+      margin-bottom: 0.8vw;
+
+      &__weekday {
+        font-family: $main-text-font;
+        font-size: $main-text-size;
+        font-weight: 550;
+        text-transform: capitalize;
+        color: map-get($black-translucents, 60);
+        padding: 0;
+      }
+    }
+
+    &__days {
+      display: grid !important;
+      justify-self: center;
+      gap: 0.73vw;
+      width: fit-content;
+      grid-template-columns: repeat(7, 1fr);
+
+      &__day {
+        &--neighboringMonth {
+          background-color: transparent;
+          color: map-get($black-translucents, 20);
+        }
+      }
+    }
+  }
+
+  &__year-view__months,
+  &__decade-view__years,
+  &__century-view__decades {
+    display: grid !important;
+    gap: 0.5vw;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+
+    &__month,
+    &__year,
+    &__decade {
+      width: 100% !important;
+      font-size: 1.5vw;
+    }
+  }
+}
+
+.user-profile .day {
+  &-scheduled {
+    background-color: $soft-yellow;
+  }
+  &-completed {
+    background-color: $soft-green;
+  }
+  &-missed {
+    background-color: $soft-red;
+  }
+  &-strength {
+    box-shadow: 0 0 0 0.25vw $bright-blue;
+  }
+  &-pilates {
+    box-shadow: 0 0 0 0.25vw $bright-purple;
+  }
+}
+
+abbr[title] {
+  text-decoration: none;
+}
+
+.calendar-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.88vw;
+
+  &__information {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0.62vw;
+
+    &__box {
+      display: flex;
+      align-items: center;
+      gap: 0.62vw;
+    }
+
+    &__title {
+      font-family: $main-text-font;
+      font-size: 0.8vw;
+      font-weight: 550;
+      color: map-get($black-translucents, 60);
+    }
+
+    &__color {
+      height: 1.25vw;
+      width: 1.25vw;
+      border-radius: 100%;
+
+      &--yellow {
+        background-color: $soft-yellow;
+      }
+      &--red {
+        background-color: $soft-red;
+      }
+      &--green {
+        background-color: $soft-green;
+      }
+      &--blue {
+        background-color: $bright-blue;
+      }
+      &--purple {
+        background-color: $bright-purple;
+      }
+    }
+  }
+}

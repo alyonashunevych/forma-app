@@ -6,4 +6,8 @@
   justify-content: center;
   gap: 1.25vw;
 
+
+  // flex-direction: column;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
 }

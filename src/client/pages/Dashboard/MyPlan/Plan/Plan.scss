@@ -1,0 +1,250 @@
+.plan {
+  display: flex;
+  width: 100%;
+  background-color: $soft-white;
+  border-radius: $border-radius;
+  padding: 1.25vw;
+  margin-bottom: $gap;
+
+  .react-calendar {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    border-radius: $border-radius;
+    background-color: $soft-white;
+    border: none;
+    padding: 0.7vw 1.25vw 1.25vw;
+    box-shadow: $box-shadow inset;
+    width: 100%;
+
+    &__icon {
+      height: 0.9vw;
+      user-select: none;
+
+      &--left {
+        transform: rotate(180deg);
+      }
+    }
+
+    &__navigation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: fit-content;
+      margin-block: 0.8vw;
+      width: 100%;
+
+      & button {
+        all: unset;
+        padding: 0.7vw;
+        height: fit-content;
+        border-radius: $border-radius;
+        transition: 0.2s;
+      }
+
+      &__label {
+        flex-grow: 0 !important;
+
+        &__labelText {
+          font-family: $main-text-font;
+          font-size: 1.25vw;
+          font-weight: 550;
+        }
+      }
+    }
+
+    &__tile {
+      display: flex;
+      flex-direction: column;
+      height: 7vw;
+      justify-content: center;
+      gap: 0.4vw;
+      padding: 0;
+      box-sizing: border-box;
+      align-items: center;
+      font-family: $main-text-font;
+      font-size: 2.5vw;
+      font-weight: 550;
+      color: map-get($black-translucents, 60);
+      background-color: $bg-color;
+      border-radius: $border-radius;
+      transition: 0.4s;
+      border: 0.7vw solid transparent;
+      cursor: default !important;
+
+      &:hover {
+        background-color: $soft-yellow-translucents !important;
+        color: black;
+
+        .calendar__button {
+          display: flex;
+        }
+      }
+
+      &--active {
+        background-color: $soft-yellow-translucents !important;
+        color: black;
+
+        &:hover {
+          color: black;
+        }
+      }
+
+      &--now {
+        color: black;
+        font-weight: 700;
+      }
+    }
+
+    &__month-view {
+      &__weekdays {
+        display: grid !important;
+        justify-self: center;
+        gap: 0.6vw;
+        grid-template-columns: repeat(7, 1fr);
+        margin-bottom: 0.8vw;
+        width: 100%;
+
+        &__weekday {
+          font-family: $main-text-font;
+          font-size: $main-text-size;
+          font-weight: 550;
+          text-transform: capitalize;
+          color: map-get($black-translucents, 60);
+          padding: 0;
+        }
+      }
+
+      &__days {
+        display: grid !important;
+        justify-self: center;
+        gap: 1.2vw;
+        width: 100%;
+        grid-template-columns: repeat(7, 1fr);
+
+        &__day {
+          &--neighboringMonth {
+            background-color: transparent;
+            color: map-get($black-translucents, 20);
+          }
+        }
+      }
+    }
+
+    &__year-view__months,
+    &__decade-view__years,
+    &__century-view__decades {
+      display: grid !important;
+      gap: 0.5vw;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+
+      &__month,
+      &__year,
+      &__decade {
+        width: 100%;
+        font-size: 1.5vw;
+      }
+    }
+  }
+
+  .day {
+    &-scheduled {
+      background-color: $soft-yellow;
+    }
+    &-completed {
+      background-color: $soft-green;
+    }
+    &-missed {
+      background-color: $soft-red;
+    }
+    &-strength {
+      border: 0.7vw solid $bright-blue;
+    }
+
+    &-pilates {
+      border: 0.7vw solid $bright-purple;
+    }
+  }
+
+  abbr {
+    line-height: 100%;
+    &[title] {
+      text-decoration: none;
+    }
+  }
+
+  .calendar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.88vw;
+    width: 100%;
+
+    &__information {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      width: fit-content;
+      gap: 0.62vw;
+
+      &__box {
+        display: flex;
+        align-items: center;
+        gap: 0.62vw;
+      }
+
+      &__title {
+        font-family: $main-text-font;
+        font-size: 0.8vw;
+        font-weight: 550;
+        color: map-get($black-translucents, 60);
+      }
+
+      &__color {
+        height: 1.25vw;
+        width: 1.25vw;
+        border-radius: 100%;
+
+        &--yellow {
+          background-color: $soft-yellow;
+        }
+        &--red {
+          background-color: $soft-red;
+        }
+        &--green {
+          background-color: $soft-green;
+        }
+        &--blue {
+          background-color: $bright-blue;
+        }
+        &--purple {
+          background-color: $bright-purple;
+        }
+      }
+    }
+  }
+
+  .calendar__button {
+    display: none;
+    font-family: $main-text-font;
+    font-size: 0.7vw;
+    font-weight: 550;
+    padding: 0.2vw 0.3vw;
+    border: none;
+    border-radius: $border-radius;
+    transition: opacity 0.2s;
+    cursor: pointer;
+    transition: all 0.4s;
+
+    &--view {
+      border: 0.15vw solid #c19adf;
+      background: $soft-purple;
+    }
+
+    &--add {
+      border: 0.15vw solid #a8adbb;
+      background: $soft-blue;
+    }
+  }
+}

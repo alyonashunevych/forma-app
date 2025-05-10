@@ -3,7 +3,7 @@
   grid-template-columns: $width-navigation auto $width-calendar;
   grid-template-rows: 6% auto;
   gap: $gap;
-  padding: $gap;
+  padding: $gap 0.5vw $gap $gap;
   height: 100vh;
 
   &__content {
@@ -11,5 +11,10 @@
     flex-direction: column;
     grid-column: 2 / 3;
     grid-row: 2 / 3;
+  }
+
+  &__main {
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
   }
 }

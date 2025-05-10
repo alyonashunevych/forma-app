@@ -1,4 +1,3 @@
-import { Calendar } from "../Calendar/Calendar";
 import { ExerciseCard } from "../ExerciseCard/ExerciseCard";
 import { NextWorkout } from "../NextWorkout/NextWorkout";
 import { ProgressCircle } from "../ProgressCircle/ProgressCircle";

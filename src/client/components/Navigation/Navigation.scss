@@ -39,6 +39,7 @@ $colors: (
 
       & .dashboard__navigation__icon {
         opacity: 0.6;
+        user-select: none;
       }
 
       &:hover,

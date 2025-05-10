@@ -46,6 +46,7 @@
 
   &__button__login {
     height: 1.7vw;
+    user-select: none;
     cursor: pointer;
   }
 }
