@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Welcome } from "./client/pages/Welcome/Welcome";
 import "./App.scss";
 import { UpdateURLOnScroll } from "./client/components/utils/UpdateURLOnScroll";
