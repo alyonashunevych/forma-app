@@ -1,0 +1,25 @@
+.step1 {
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1.88vw;
+    margin-bottom: 2.5vw;
+  }
+
+  &__button {
+    display: flex;
+    width: 9.3vw;
+    height: 9.3vw;
+    padding: 0.94vw;
+    border-radius: $border-radius;
+    border: none;
+    box-shadow: $box-shadow inset;
+    background-color: $bg-color-translucent;
+    cursor: pointer;
+    transition: 0s;
+  }
+
+  .selected {
+    box-shadow: 0 0 0 0.3vw $bright-blue;
+  }
+}

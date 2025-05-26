@@ -17,7 +17,14 @@ a {
   display: flex;
   margin: auto 0;
   cursor: pointer;
+}
 
+button {
+  cursor: pointer;
+}
+
+.link {
+  text-decoration: none;
 }
 
 body {

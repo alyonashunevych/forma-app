@@ -1,0 +1,100 @@
+.exercise-table {
+  display: flex;
+  flex-direction: column;
+  box-shadow: $box-shadow inset;
+  border-radius: $border-radius;
+  padding-bottom: 0.8vw;
+  gap: 0.3vw;
+
+  &__row {
+    display: grid;
+    line-height: 3vw;
+    justify-content: center;
+    grid-template-columns: 3.75vw 6.5vw 6.5vw 6.5vw 3.75vw;
+    gap: 0.6vw;
+    border-top: 0.15vw solid map-get($black-translucents, 5);
+    padding: 0.3vw 0.8vw 0 0.8vw;
+
+    &:first-child {
+      border: none;
+    }
+
+    &-title {
+      font-family: $main-text-font;
+      font-weight: 550;
+      color: map-get($black-translucents, 60);
+      font-size: $main-text-size;
+      width: 100%;
+      text-align: center;
+      user-select: none;
+    }
+
+    .checkMark {
+      width: 1.14vw;
+      opacity: 0.8;
+
+      &--big {
+        width: 1.3vw;
+      }
+    }
+
+    &__tile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      border-radius: 0.6vw;
+      background-color: map-get($black-translucents, 5);
+      border: none;
+      font-family: $main-text-font;
+      font-weight: 550;
+      font-size: 1.5vw;
+      user-select: none;
+    }
+
+    input {
+      align-items: center;
+      justify-content: center;
+      -moz-appearance: textfield;
+      appearance: textfield;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &::placeholder {
+        font-family: $main-text-font;
+        font-weight: 550;
+        font-size: 1.5vw;
+      }
+
+      &:disabled {
+        color: black;
+      }
+
+      &:hover {
+        outline: none;
+        box-shadow: $box-shadow-mini inset;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: $box-shadow-mini inset;
+      }
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      box-shadow: $box-shadow-mini inset;
+      background-color: map-get($black-translucents, 10);
+
+      &.done {
+        background-color: $dark-blue;
+      }
+    }
+  }
+}

@@ -11,16 +11,18 @@ export function Dashboard() {
   const location = useLocation();
 
   const isDashboardPage = location.pathname === "/home/dashboard";
+  const isWorkoutPage = location.pathname.startsWith("/home/plan/");
 
   return (
     <div className="dashboard">
       <Navigation />
-      <DashboardHeader />
+      {!isWorkoutPage && <DashboardHeader />}
 
       <main
         className={classNames({
           dashboard__content: isDashboardPage,
           dashboard__main: !isDashboardPage,
+          dashboard__workout: isWorkoutPage,
         })}
         ref={contentRef}
       >

@@ -21,11 +21,14 @@ $width-calendar: 25%;
 $bright-yellow: #e7f461;
 $bright-blue: #9F9ADF;
 $bright-purple: #C19ADF;
+$bright-red: #cf6d6d;
 
 $soft-yellow: #f3f9b0;
 $soft-yellow-translucents: #f5f9c5;
 $soft-green: #CADD98;
+$soft-green-translucents: #cadd9883;
 $soft-red: #E5B3A5;
+$soft-red-translucents: #e5b3a57f;
 $soft-blue: #BCC2D4;
 $soft-orange: #F0DBA0;
 $soft-purple: #D3BDE3;
@@ -37,6 +40,7 @@ $soft-white: #FDFCFA;
 $border-radius: 1.25vw;
 $gap: 1.5vw;
 $box-shadow: 0px 0px 1.25vw map-get($black-translucents, 10);
+$box-shadow-mini: 0px 0px 0.5vw map-get($black-translucents, 25);
 
 $main-text-size: 0.9vw;
 

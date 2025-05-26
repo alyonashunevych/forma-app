@@ -20,7 +20,7 @@
 ## 🛠️ Tech Stack
 
 - **Frontend**: React + Sass
-- **Backend**: 
+- **Backend**: Kotlin
 - **Database**: 
 - **Auth**: 
 - **Integrations**: 

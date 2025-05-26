@@ -1,0 +1,237 @@
+.workout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  background-color: $soft-white;
+  border-radius: $border-radius;
+  padding: 1.8vw;
+  margin-bottom: $gap;
+  box-shadow: $box-shadow;
+  align-items: center;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1.25vw;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 40%;
+    height: fit-content;
+
+    &--step4 {
+      width: 55%;
+      gap: 1vw;
+    }
+  }
+
+  .button-back,
+  .button-previous,
+  .button-next {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.62vw;
+    height: fit-content;
+    cursor: pointer;
+    position: absolute;
+
+    &__arrow {
+      transform: rotate(180deg);
+      user-select: none;
+      height: 0.9vw;
+    }
+
+    &__text {
+      font-family: $main-text-font;
+      font-size: $main-text-size;
+      font-weight: 550;
+    }
+  }
+
+  .button-back {
+    top: 1.8vw;
+    left: 1.8vw;
+
+    &__text {
+      color: map-get($black-translucents, 70);
+    }
+  }
+
+  .button-previous {
+    top: 0;
+    left: -2vw;
+    height: 100%;
+  }
+
+  .link.inactive * {
+    opacity: 0.7;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .button-next {
+    top: 0;
+    right: 0;
+    height: 100%;
+
+    &__arrow {
+      transform: rotate(0deg);
+    }
+  }
+
+  .button-settings {
+    opacity: 0.5;
+    height: 1.4vw;
+    width: 1.4vw;
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+    top: 1.8vw;
+    right: 1.8vw;
+  }
+
+  &__button-done {
+    all: unset;
+    padding: 0.75vw 1.25vw;
+    border-radius: $border-radius;
+    background-color: $soft-yellow;
+    border: none;
+    font-family: $main-text-font;
+    font-size: $main-text-size;
+    color: black;
+    min-width: 7vw;
+    text-align: center;
+    font-weight: 550;
+    box-shadow: $box-shadow;
+    cursor: pointer;
+    transition: 0.4s;
+
+    &:hover {
+      background-color: $soft-green-translucents;
+    }
+
+    &--dashboard:hover {
+      background-color: $soft-yellow-translucents;
+    }
+
+    &--active {
+      background-color: $soft-green;
+      cursor: default;
+
+      &:hover {
+        background-color: $soft-green;
+      }
+    }
+
+    &--step4--yes {
+      background-color: $soft-green;
+    }
+    &--step4--no {
+      background-color: $soft-red;
+      &:hover {
+        background-color: $soft-red-translucents;
+      }
+    }
+  }
+
+  &__number,
+  &__type,
+  &__date,
+  &__step-number {
+    font-family: $main-text-font;
+    font-size: 1.87vw;
+    font-weight: 600;
+    color: black;
+  }
+
+  &__number {
+    margin-bottom: 1.25vw;
+  }
+
+  &__type {
+    font-size: 1.25vw;
+    font-weight: 550;
+  }
+
+  &__date,
+  &__step-number {
+    font-weight: 550;
+    font-size: $main-text-size;
+    margin-top: 0.63vw;
+  }
+
+  &__steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.94vw;
+    width: 90%;
+  }
+
+  &__progress-bar {
+    display: flex;
+    flex-direction: row;
+    gap: 0.63vw;
+
+    &__tile {
+      border-radius: $border-radius;
+      height: 0.6vw;
+      width: 100%;
+      background-color: $bg-color;
+
+      &--1 {
+        background-color: $soft-yellow;
+      }
+      &--2 {
+        background-color: $soft-green;
+      }
+      &--3 {
+        background-color: $soft-red;
+      }
+      &--4 {
+        background-color: $soft-blue;
+      }
+      &--5 {
+        background-color: $soft-orange;
+      }
+    }
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 1.88vw;
+    width: 100%;
+
+    &__text {
+      font-family: $main-text-font;
+      font-weight: 600;
+      font-size: 1.125vw;
+      margin-bottom: 1.88vw;
+    }
+  }
+
+  .workout__alert {
+    position: fixed;
+    top: 3vw;
+    color: #fff;
+    background: $bright-red;
+    padding: 10px 20px;
+    border-radius: $border-radius;
+    font-family: $main-text-font;
+    font-weight: 600;
+    font-size: $main-text-size;
+    margin-bottom: 1.88vw;
+    text-align: center;
+    animation: fadeIn 0.3s;
+  }
+}

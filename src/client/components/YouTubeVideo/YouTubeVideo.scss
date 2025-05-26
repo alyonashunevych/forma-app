@@ -1,0 +1,9 @@
+.youTubeVideo {
+  width: 90%;
+  aspect-ratio: 16/9;
+
+  iframe {
+    border: none;
+    border-radius: $border-radius;
+  }
+}

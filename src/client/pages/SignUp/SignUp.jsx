@@ -125,7 +125,7 @@ export function SignUp() {
 
         <div className="signup__login">
           <p className="signup__login__text">Already have an account?</p>
-          <Link to="/login" className="signup__login__link">
+          <Link to="/login" className="link">
             <button className="signup__login__button">Log In</button>
           </Link>
         </div>
