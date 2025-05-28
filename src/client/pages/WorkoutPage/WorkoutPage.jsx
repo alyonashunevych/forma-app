@@ -11,12 +11,29 @@ import settings from "../../../images/settings.svg";
 import "./WorkoutPage.scss";
 import classNames from "classnames";
 import { useCallback, useEffect, useState } from "react";
+import {
+  changeWorkoutDay,
+  getWorkoutDay,
+  getWorkoutNumber,
+} from "../../utils/workoutStorage";
 
 export function WorkoutPage() {
   const { date } = useParams();
   const location = useLocation();
+  const workout = getWorkoutDay(date);
+  const number = getWorkoutNumber(date);
   const navigate = useNavigate();
+  const [showAlertDone, setShowAlertDone] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+
+  const isToday = (() => {
+    if (!date) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const workoutDate = new Date(date);
+    workoutDate.setHours(0, 0, 0, 0);
+    return today.getTime() === workoutDate.getTime();
+  })();
 
   const steps = [
     "Cardio Warm-up",
@@ -54,10 +71,23 @@ export function WorkoutPage() {
     }
   }, [currentStep, isDone, navigate, areRequiredStepsDone]);
 
+  const triggerAlertDone = () => {
+    setShowAlertDone(true);
+    setTimeout(() => setShowAlertDone(false), 2500);
+  };
+
   const triggerAlert = () => {
     setShowAlert(true);
     setTimeout(() => setShowAlert(false), 2500);
   };
+
+  function capitalizeWords(str) {
+    if (!str) return "";
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  }
 
   return (
     <div className="workout">
@@ -68,11 +98,17 @@ export function WorkoutPage() {
         </div>
       </Link>
 
-      <h1 className="workout__number">Workout №17</h1>
+      <h1 className="workout__number">Workout №{number}</h1>
 
-      <img src={settings} alt="settings" className="button-settings" />
-      <p className="workout__type">Strength Training - Upper Body</p>
-      <p className="workout__date">Scheduled for: {formattedDate} at 10:00</p>
+      {workout.state !== 'completed' && <Link to={`./../change-training`} className="link">
+        <img src={settings} alt="settings" className="button-settings" />
+      </Link>}
+
+      <p className="workout__type">
+        {capitalizeWords(workout.type)} Training -{" "}
+        {capitalizeWords(workout.body)}
+      </p>
+      <p className="workout__date">Scheduled for: {formattedDate}</p>
 
       <div className="workout__steps">
         <p className="workout__step-number">
@@ -122,6 +158,10 @@ export function WorkoutPage() {
               "workout__button-done--step4--yes": currentStep === 4,
             })}
             onClick={() => {
+              if (!isToday) {
+                triggerAlert();
+                return;
+              }
               setIsDone((prev) => {
                 const updated = [...prev];
                 updated[currentStep - 1] = true;
@@ -140,10 +180,13 @@ export function WorkoutPage() {
         {currentStep === 4 && (
           <Link
             to={"step5"}
-            onClick={() => {
-              if (!areRequiredStepsDone()) {
-                triggerAlert();
+            onClick={(e) => {
+              if (!areRequiredStepsDone() || !isToday) {
+                e.preventDefault();
+                triggerAlertDone();
+                return;
               }
+              changeWorkoutDay(date, { state: "completed" });
             }}
           >
             <button className="workout__button-done workout__button-done--step4--no">
@@ -153,13 +196,14 @@ export function WorkoutPage() {
         )}
 
         {currentStep === 5 && (
-          <Link
-            to={"/home/dashboard"}
+          <button
+            className="workout__button-done workout__button-done--dashboard"
+            onClick={() => {
+              navigate("/home/dashboard");
+            }}
           >
-            <button className="workout__button-done workout__button-done--dashboard">
-              Go to Dashboard
-            </button>
-          </Link>
+            Go to Dashboard
+          </button>
         )}
 
         <Link
@@ -185,9 +229,15 @@ export function WorkoutPage() {
         </Link>
       </div>
 
-      {showAlert && (
+      {showAlertDone && (
         <div className="workout__alert">
           Please complete and mark all steps before finishing the workout!
+        </div>
+      )}
+
+      {showAlert && (
+        <div className="workout__alert">
+          Please wait until the scheduled day to complete this workout!
         </div>
       )}
     </div>

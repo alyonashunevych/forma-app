@@ -13,12 +13,14 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "chart.js": "^4.4.9",
     "choices.js": "^11.1.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "downshift": "^9.0.9",
     "react": "^19.1.0",
     "react-calendar": "^5.1.0",
+    "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.5.3",
     "react-select": "^5.10.1",

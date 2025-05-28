@@ -1,0 +1,37 @@
+.weight-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: min-content;
+  padding: 1.25vw 0.5vw;
+  border-radius: $border-radius;
+  background-color: $soft-white;
+  box-shadow: $box-shadow;
+  width: 100%;
+
+  grid-column: 2 / 3;
+  grid-row: 2 / 2;
+
+  &__title,
+  &__name {
+    font-size: $main-text-size;
+    font-family: $main-text-font;
+    font-weight: 550;
+    color: map-get($black-translucents, 70);
+    text-align: center;
+  }
+
+  .custom-graph {
+    &__line {
+      stroke: $soft-red;
+    }
+
+    &__point {
+      stroke: $soft-red;
+    }
+    &__point:hover {
+      fill: $soft-red;
+    }
+  }
+}

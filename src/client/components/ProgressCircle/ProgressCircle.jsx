@@ -1,15 +1,61 @@
 import { useEffect, useRef } from "react";
+import { getWorkoutDays } from "../../utils/workoutStorage";
 import "./ProgressCircle.scss";
 
-export function ProgressCircle() {
-  const doneStrengthTrainings = 4;
-  const strengthTrainings = 6;
+function getWeekRange(date = new Date()) {
+  const d = new Date(date);
+  const day = d.getDay(); // 0 (Sun) ... 6 (Sat)
+  const diffToMonday = (day + 6) % 7;
+  const monday = new Date(d);
+  monday.setDate(d.getDate() - diffToMonday);
+  monday.setHours(0, 0, 0, 0);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  sunday.setHours(23, 59, 59, 999);
+  return { monday, sunday };
+}
 
-  const donePilatesTrainings = 3;
-  const pilatesTrainings = 7;
+function getWeeklyStats() {
+  const { monday, sunday } = getWeekRange();
+  const workoutDays = getWorkoutDays();
+
+  let strengthTrainings = 0;
+  let doneStrengthTrainings = 0;
+  let pilatesTrainings = 0;
+  let donePilatesTrainings = 0;
+
+  Object.entries(workoutDays).forEach(([dateStr, workout]) => {
+    const workoutDate = new Date(dateStr);
+    workoutDate.setHours(0, 0, 0, 0);
+    if (workoutDate >= monday && workoutDate <= sunday) {
+      if (workout.type === "strength") {
+        strengthTrainings++;
+        if (workout.state === "completed") doneStrengthTrainings++;
+      }
+      if (workout.type === "pilates") {
+        pilatesTrainings++;
+        if (workout.state === "completed") donePilatesTrainings++;
+      }
+    }
+  });
+
+  return {
+    strengthTrainings,
+    doneStrengthTrainings,
+    pilatesTrainings,
+    donePilatesTrainings,
+  };
+}
+
+export function ProgressCircle() {
+  const {
+    strengthTrainings,
+    doneStrengthTrainings,
+    pilatesTrainings,
+    donePilatesTrainings,
+  } = getWeeklyStats();
 
   const textRef = useRef(null);
-
   const progressStrengthRef = useRef(null);
   const progressPilatesRef = useRef(null);
 
@@ -42,9 +88,16 @@ export function ProgressCircle() {
   useEffect(() => {
     const totalTrainings = strengthTrainings + pilatesTrainings;
     const completedTrainings = doneStrengthTrainings + donePilatesTrainings;
-    const progressTotal = (completedTrainings / totalTrainings) * 100;
-    const progressStrength = (doneStrengthTrainings / strengthTrainings) * 100;
-    const progressPilates = (donePilatesTrainings / pilatesTrainings) * 100;
+    const progressTotal =
+      totalTrainings > 0 ? (completedTrainings / totalTrainings) * 100 : 0;
+    const progressStrength =
+      strengthTrainings > 0
+        ? (doneStrengthTrainings / strengthTrainings) * 100
+        : 0;
+    const progressPilates =
+      pilatesTrainings > 0
+        ? (donePilatesTrainings / pilatesTrainings) * 100
+        : 0;
 
     setProgress(progressStrength, progressPilates, progressTotal);
   }, [

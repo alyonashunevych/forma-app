@@ -1,0 +1,75 @@
+.change-training {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+  width: 100%;
+  background-color: $soft-white;
+  border-radius: $border-radius;
+  padding: 1.8vw;
+  box-shadow: $box-shadow;
+  position: relative;
+
+
+  &__title {
+    font-family: $main-text-font;
+    font-size: 1.87vw;
+    font-weight: 600;
+    justify-self: center;
+  }
+
+  &__date {
+    font-family: $main-text-font;
+    font-size: 1.125vw;
+    font-weight: 550;
+    margin-top: 0.63vw;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vw;
+    margin-top: 3vw;
+    width: 70%;
+
+    &__params {
+      display: flex;
+      flex-direction: row;
+      gap: 1.25vw;
+    }
+
+    &__button--delete {
+      margin-top: 0;
+      background-color: $bright-red;
+
+      &:hover {
+        background-color: $soft-red;
+      }
+    }
+  }
+
+  .button-back {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.62vw;
+    height: fit-content;
+    cursor: pointer;
+    position: absolute;
+    top: 1.8vw;
+    left: 1.8vw;
+
+    &__arrow {
+      transform: rotate(180deg);
+      user-select: none;
+      height: 0.9vw;
+    }
+
+    &__text {
+      font-family: $main-text-font;
+      font-size: $main-text-size;
+      font-weight: 550;
+      color: map-get($black-translucents, 70);
+    }
+  }
+}

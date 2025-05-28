@@ -7,21 +7,13 @@ import "react-calendar/dist/Calendar.css";
 
 import arrow from "../../../../images/calendar-arrow.svg";
 import doublearrow from "../../../../images/calendar-double-arrow.svg";
+import { getWorkoutDays } from "../../../utils/workoutStorage";
 
 export function MyPlan() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const navigate = useNavigate();
 
-  const workoutDays = {
-    "2025-05-01": { state: "missed", type: "strength" },
-    "2025-05-02": { state: "completed", type: "pilates" },
-    "2025-05-04": { state: "completed", type: "pilates" },
-    "2025-05-27": { state: "scheduled", type: "strength" },
-    "2025-06-17": { state: "scheduled", type: "pilates" },
-    "2025-06-13": { state: "missed", type: "strength" },
-    "2025-06-05": { state: "completed", type: "pilates" },
-    "2025-06-22": { state: "scheduled", type: "strength" },
-  };
+  const workoutDays = getWorkoutDays();
 
   return (
     <div className="plan">
@@ -95,10 +87,13 @@ export function MyPlan() {
 
             if (date >= today) {
               if (workoutDay) {
+                const type = workoutDay.type || "strength";
                 return (
                   <button
                     className="calendar__button calendar__button--view"
-                    onClick={() => navigate(`/home/plan/${dateStr}/step1`)}
+                    onClick={() =>
+                      navigate(`/home/plan/${dateStr}/${type}/step1`)
+                    }
                   >
                     View plan
                   </button>
@@ -106,7 +101,10 @@ export function MyPlan() {
               }
 
               return (
-                <button className="calendar__button calendar__button--add">
+                <button
+                  className="calendar__button calendar__button--add"
+                  onClick={() => navigate(`/home/plan/${dateStr}/add-training`)}
+                >
                   Add training
                 </button>
               );

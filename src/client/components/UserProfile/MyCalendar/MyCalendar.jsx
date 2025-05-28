@@ -5,19 +5,28 @@ import "./MyCalendar.scss";
 
 import arrow from "../../../../images/calendar-arrow.svg";
 import doublearrow from "../../../../images/calendar-double-arrow.svg";
+import { getWorkoutDays } from "../../../utils/workoutStorage";
+import { useNavigate } from "react-router-dom";
 
 export function MyCalendar() {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const workoutDays = getWorkoutDays();
+  const navigate = useNavigate();
 
-  const workoutDays = {
-    "2025-05-01": { state: "missed", type: "strength" },
-    "2025-05-02": { state: "completed", type: "pilates" },
-    "2025-05-04": { state: "completed", type: "pilates" },
-    "2025-05-27": { state: "scheduled", type: "strength" },
-    "2025-06-17": { state: "scheduled", type: "pilates" },
-    "2025-06-13": { state: "missed", type: "strength" },
-    "2025-06-05": { state: "completed", type: "pilates" },
-    "2025-06-22": { state: "scheduled", type: "strength" },
+  const handleDayClick = (date) => {
+    const dateStr = date.toLocaleDateString("en-CA");
+    const workoutDay = workoutDays[dateStr];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (date >= today) {
+      if (workoutDay) {
+        const type = workoutDay.type || "strength";
+        navigate(`/home/plan/${dateStr}/${type}/step1`);
+      } else {
+        navigate(`/home/plan/${dateStr}/add-training`);
+      }
+    }
   };
 
   return (
@@ -26,6 +35,7 @@ export function MyCalendar() {
         locale="en-US"
         value={selectedDate}
         onChange={setSelectedDate}
+        onClickDay={handleDayClick}
         prevLabel={
           <img
             src={arrow}
@@ -54,31 +64,20 @@ export function MyCalendar() {
             if (workoutDay) {
               const { state, type } = workoutDay;
 
-              const stateClass = (() => {
-                switch (state) {
-                  case "completed":
-                    return "day-completed";
-                  case "missed":
-                    return "day-missed";
-                  case "scheduled":
-                    return "day-scheduled";
-                  default:
-                    return "";
-                }
-              })();
+              const stateClasses = {
+                completed: "day-completed",
+                missed: "day-missed",
+                scheduled: "day-scheduled",
+              };
 
-              const typeClass = (() => {
-                switch (type) {
-                  case "strength":
-                    return "day-strength";
-                  case "pilates":
-                    return "day-pilates";
-                  default:
-                    return "";
-                }
-              })();
+              const typeClasses = {
+                strength: "day-strength",
+                pilates: "day-pilates",
+              };
 
-              return `${stateClass} ${typeClass}`.trim();
+              return `${stateClasses[state] || ""} ${
+                typeClasses[type] || ""
+              }`.trim();
             }
 
             return null;
@@ -86,26 +85,21 @@ export function MyCalendar() {
 
           return null;
         }}
+        tileContent={() => null}
       />
 
       <div className="calendar-wrapper__information">
         <div className="calendar-wrapper__information__box">
           <div className="calendar-wrapper__information__color calendar-wrapper__information__color--yellow"></div>
-          <p className="calendar-wrapper__information__title">
-            Scheduled
-          </p>
+          <p className="calendar-wrapper__information__title">Scheduled</p>
         </div>
         <div className="calendar-wrapper__information__box">
           <div className="calendar-wrapper__information__color calendar-wrapper__information__color--green"></div>
-          <p className="calendar-wrapper__information__title">
-            Completed
-          </p>
+          <p className="calendar-wrapper__information__title">Completed</p>
         </div>
         <div className="calendar-wrapper__information__box">
           <div className="calendar-wrapper__information__color calendar-wrapper__information__color--red"></div>
-          <p className="calendar-wrapper__information__title">
-            Missed
-          </p>
+          <p className="calendar-wrapper__information__title">Missed</p>
         </div>
         <div className="calendar-wrapper__information__box">
           <div className="calendar-wrapper__information__color calendar-wrapper__information__color--blue"></div>
@@ -115,9 +109,7 @@ export function MyCalendar() {
         </div>
         <div className="calendar-wrapper__information__box">
           <div className="calendar-wrapper__information__color calendar-wrapper__information__color--purple"></div>
-          <p className="calendar-wrapper__information__title">
-            Pilates
-          </p>
+          <p className="calendar-wrapper__information__title">Pilates</p>
         </div>
       </div>
     </div>

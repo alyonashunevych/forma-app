@@ -1,0 +1,24 @@
+.custom-graph {
+  width: 10vw;
+  height: 10vw;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__label {
+    font-family: $main-text-font;
+    font-weight: 550;
+  }
+
+  &__line {
+    stroke: $soft-green;
+  }
+
+  &__point {
+    stroke: $soft-green;
+  }
+  &__point:hover {
+    fill: $soft-green;
+  }
+}

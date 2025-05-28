@@ -1,0 +1,28 @@
+.reps-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: min-content;
+  padding: 1.25vw 0.5vw;
+  border-radius: $border-radius;
+  background-color: $soft-white;
+  box-shadow: $box-shadow;
+  width: 100%;
+
+  grid-column: 1 / 2;
+  grid-row: 2 / 2;
+
+  &__title, &__name {
+    font-size: $main-text-size;
+    font-family: $main-text-font;
+    font-weight: 550;
+    color: map-get($black-translucents, 70);
+    width: 8vw;
+    text-align: center;
+  }
+
+  &__name {
+    width: 100%;
+  }
+}

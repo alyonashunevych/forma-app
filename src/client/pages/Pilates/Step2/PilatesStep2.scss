@@ -1,0 +1,49 @@
+.step2 {
+  height: 29vw;
+  .step__text:first-of-type {
+    margin-bottom: 0.63vw;
+    font-size: 1.25vw;
+  }
+
+  &__animation {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+
+    .step__text {
+      position: absolute;
+      width: min-content;
+      text-align: center;
+
+      &--bold {
+        font-size: 3vw;
+      }
+    }
+  }
+
+  .progress-circle {
+    &__svg {
+      margin-top: 1.25vw;
+      width: 15vw;
+      height: 15vw;
+    }
+
+    &__progress {
+      fill: none;
+      stroke: $bright-purple;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 10;
+      stroke-dashoffset: 100;
+      transition: stroke-dasharray 3s ease-in-out;
+
+      &--small {
+        stroke: $bright-purple;
+      }
+    }
+  }
+
+}

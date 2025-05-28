@@ -2,17 +2,17 @@ import "./UserData.scss";
 import img from "../../../images/user-data-img.png";
 import logo from "../../../images/logo-black.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import Choices from "choices.js";
+import { useEffect, useState } from "react";
+import { ChoicesSelect } from "../../components/ChoicesSelect/ChoicesSelect";
 
 export function UserData() {
   const location = useLocation();
-  const sexSelectRef = useRef(null);
-  const injuriesSelectRef = useRef(null);
-  const intensitySelectRef = useRef(null);
-  const bodySelectRef = useRef(null);
-
   const navigate = useNavigate();
+
+  const [sex, setSex] = useState("");
+  const [injuries, setInjuries] = useState("");
+  const [intensity, setIntensity] = useState("");
+  const [body, setBody] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,21 +22,6 @@ export function UserData() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    [
-      sexSelectRef,
-      injuriesSelectRef,
-      intensitySelectRef,
-      bodySelectRef,
-    ].forEach((select) => {
-      if (select.current) {
-        new Choices(select.current, {
-          searchEnabled: false,
-          itemSelectText: "",
-          shouldSort: false,
-        });
-      }
-    });
   }, [location]);
 
   return (
@@ -69,13 +54,17 @@ export function UserData() {
             </label>
             <label className="user-data__form__label">
               Sex
-              <select name="sex" ref={sexSelectRef} required>
-                <option value="" disabled selected>
-                  Select your gender
-                </option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
+              <ChoicesSelect
+                name="sex"
+                value={sex}
+                onChange={e => setSex(e.target.value)}
+                options={[
+                  { value: "male", label: "Male" },
+                  { value: "female", label: "Female" },
+                ]}
+                required
+                placeholder="Select your gender"
+              />
             </label>
           </div>
 
@@ -109,32 +98,40 @@ export function UserData() {
 
           <label className="user-data__form__label">
             Injuries
-            <select name="injuries" ref={injuriesSelectRef} required>
-              <option value="" disabled selected>
-                Have any injuries or restrictions?
-              </option>
-              <option value="none">None</option>
-              <option value="knee injury">Knee Injury</option>
-              <option value="ankle sprain">Ankle Sprain</option>
-              <option value="lower back pain">Lower Back Pain</option>
-              <option value="shoulder injury">Shoulder Injury</option>
-              <option value="wrist pain">Wrist Pain</option>
-              <option value="elbow injury">Elbow Injury</option>
-              <option value="hip injury">Asthma</option>
-              <option value="other">Other</option>
-            </select>
+            <ChoicesSelect
+              name="injuries"
+              value={injuries}
+              onChange={e => setInjuries(e.target.value)}
+              options={[
+                { value: "none", label: "None" },
+                { value: "knee injury", label: "Knee Injury" },
+                { value: "ankle sprain", label: "Ankle Sprain" },
+                { value: "lower back pain", label: "Lower Back Pain" },
+                { value: "shoulder injury", label: "Shoulder Injury" },
+                { value: "wrist pain", label: "Wrist Pain" },
+                { value: "elbow injury", label: "Elbow Injury" },
+                { value: "hip injury", label: "Asthma" },
+                { value: "other", label: "Other" },
+              ]}
+              required
+              placeholder="Have any injuries or restrictions?"
+            />
           </label>
 
           <label className="user-data__form__label">
             What intensity level do you prefer for your workouts?
-            <select name="intensity" ref={intensitySelectRef} required>
-              <option value="" disabled selected>
-                Intensity
-              </option>
-              <option value="light">Light</option>
-              <option value="moderate">Moderate</option>
-              <option value="intense">Intense</option>
-            </select>
+            <ChoicesSelect
+              name="intensity"
+              value={intensity}
+              onChange={e => setIntensity(e.target.value)}
+              options={[
+                { value: "light", label: "Light" },
+                { value: "moderate", label: "Moderate" },
+                { value: "intense", label: "Intense" },
+              ]}
+              required
+              placeholder="Intensity"
+            />
           </label>
           <p className="user-data__form__text">
             You can change intensity anytime in your profile
@@ -155,15 +152,18 @@ export function UserData() {
 
           <label className="user-data__form__label">
             Which areas do you want to focus on?
-            <select name="body" ref={bodySelectRef} required>
-              <option value="" disabled selected>
-                Select your focus areas
-              </option>
-              <option value="full body">Full Body</option>
-              <option value="upper body">Upper Body</option>
-              <option value="lower body">Lower Body</option>
-              <option value="core">Core</option>
-            </select>
+            <ChoicesSelect
+              name="body"
+              value={body}
+              onChange={e => setBody(e.target.value)}
+              options={[
+                { value: "full body", label: "Full Body" },
+                { value: "upper body", label: "Upper Body" },
+                { value: "lower body", label: "Lower Body" },
+              ]}
+              required
+              placeholder="Select your focus areas"
+            />
           </label>
 
           <button type="submit" className="user-data__form__button">
