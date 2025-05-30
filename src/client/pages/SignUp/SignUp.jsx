@@ -4,15 +4,37 @@ import logo from "../../../images/logo-black.svg";
 import google from "../../../images/google.svg";
 import apple from "../../../images/apple.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function SignUp() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  const [firstName, setName] = useState("");
+  const [lastName, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Form submitted");
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    const signUpData = {
+      email,
+      password,
+      firstName: firstName,
+      lastName: lastName,
+    };
+
+    localStorage.setItem("signUpData", JSON.stringify(signUpData));
+
     navigate("/user-data");
   };
 
@@ -36,19 +58,11 @@ export function SignUp() {
 
         <div className="signup__continue-buttons">
           <button className="signup__continue-button">
-            <img
-              src={google}
-              alt="Google logo"
-              className="signup__continue-button__img"
-            />
+            <img src={google} alt="Google logo" className="signup__continue-button__img" />
             Continue with Google
           </button>
           <button className="signup__continue-button">
-            <img
-              src={apple}
-              alt="Apple logo"
-              className="signup__continue-button__img"
-            />
+            <img src={apple} alt="Apple logo" className="signup__continue-button__img" />
             Continue with Apple
           </button>
         </div>
@@ -65,20 +79,24 @@ export function SignUp() {
               Name
               <input
                 type="text"
-                name="name"
+                name="firstName"
                 placeholder="Alyona"
                 className="signup__form__input"
                 required
+                value={firstName}
+                onChange={(e) => setName(e.target.value)}
               />
             </label>
             <label className="signup__form__label">
               Surname
               <input
                 type="text"
-                name="surname"
+                name="lastName"
                 placeholder="Shunevych"
                 className="signup__form__input"
                 required
+                value={lastName}
+                onChange={(e) => setSurname(e.target.value)}
               />
             </label>
           </div>
@@ -91,6 +109,8 @@ export function SignUp() {
               placeholder="example@gmail.com"
               className="signup__form__input"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
 
@@ -101,8 +121,10 @@ export function SignUp() {
               name="password"
               placeholder="••••••••"
               className="signup__form__input"
-              maxlength="20"
+              maxLength={20}
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </label>
 
@@ -113,10 +135,18 @@ export function SignUp() {
               name="confirm-password"
               placeholder="••••••••"
               className="signup__form__input"
-              maxlength="20"
+              maxLength={20}
               required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </label>
+
+          {error && (
+            <div className="signup__form__error">
+              {error}
+            </div>
+          )}
 
           <button type="submit" className="signup__form__button">
             Create account

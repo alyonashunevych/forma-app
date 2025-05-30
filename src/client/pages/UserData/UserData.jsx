@@ -4,20 +4,144 @@ import logo from "../../../images/logo-black.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ChoicesSelect } from "../../components/ChoicesSelect/ChoicesSelect";
+import { register } from "../../utils/api/authApi";
+import { getBaseTrainings } from "../../utils/api/baseTrainings";
+import { getTrainingLevels } from "../../utils/api/trainingLevelApi";
+
+// const TRAINING_LEVELS = [
+//   { value: "d6ccfc2b-e1cc-4ee9-9f76-794cce1c6ae3", label: "Light" },
+//   { value: "b1e5b8e2-1b2a-4d7e-9e2e-1234567890ab", label: "Moderate" },
+//   { value: "a2f7c8d3-2c3b-5e8f-0f3f-abcdefabcdef", label: "Intense" },
+// ];
+
+// const exercisesOptions = {
+//     "full body": [
+//       {
+//         value: "fullbody1",
+//         label:
+//           "Option 1: Hip Thrust, Hip Adduction, Pull-Ups, Chest Flys, Overhead Extensions",
+//       },
+//       {
+//         value: "fullbody2",
+//         label:
+//           "Option 2: Bulgarian Split Squats, Hip Adduction, Lat Pulldowns, Chest Flys, Tricep Pushdowns",
+//       },
+//       {
+//         value: "fullbody3",
+//         label:
+//           "Option 3: Split Squats, Hip Adduction, Dumbbell Rows, Chest Flys, Tricep KickBacks",
+//       },
+//     ],
+//     "upper body": [
+//       {
+//         value: "upperbody1",
+//         label:
+//           "Option 1: Lat Pulldowns, Underhand Rows, Chest Flys, Bicep Curls, Overhead Extensions",
+//       },
+//       {
+//         value: "upperbody2",
+//         label:
+//           "Option 2: Pull-Ups, Bent Over Rows, Chest Flys, Bicep Curls, Tricep Pushdowns",
+//       },
+//       {
+//         value: "upperbody3",
+//         label:
+//           "Option 3: Lat Pullovers, Dumbbell Rows, Chest Flys, Bicep Curls, Tricep KickBacks",
+//       },
+//     ],
+//     "lower body": [
+//       {
+//         value: "lowerbody1",
+//         label:
+//           "Option 1: Hip Thrust, Bulgarian Split Squats, Romanian Deadlifts, Hip Adduction, Leg Press",
+//       },
+//       {
+//         value: "lowerbody2",
+//         label:
+//           "Option 2: Hip Thrust, Split Squats, Glute Extensions, Hip Adduction, Lying Leg Curls",
+//       },
+//       {
+//         value: "lowerbody3",
+//         label:
+//           "Option 3: Hip Thrust, Sumo Squats, KickBacks, Hip Adduction, Lying Leg Curls",
+//       },
+//     ],
+//   };
 
 export function UserData() {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [sex, setSex] = useState("");
-  const [injuries, setInjuries] = useState("");
-  const [intensity, setIntensity] = useState("");
-  const [body, setBody] = useState("");
+  const [trainingLevelId, setTrainingLevelId] = useState("");
+  const [muscleGroup, setMuscleGroup] = useState("");
+  const [daysPerWeek, setDaysPerWeek] = useState("");
+  const [exerciseValue, setExerciseValue] = useState("");
+  const [baseTrainings, setBaseTrainings] = useState([]);
+  const [trainingLevels, setTrainingLevels] = useState([]);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    const data = localStorage.getItem("signUpData");
+    if (!data) {
+      navigate("/sign-up");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    getBaseTrainings().then(setBaseTrainings);
+  }, []);
+
+  useEffect(() => {
+    getTrainingLevels().then(setTrainingLevels);
+  }, []);
+
+  const baseTrainingOptions = baseTrainings.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
+
+  const trainingLevelOptions = trainingLevels.map((item) => ({
+    value: item.id,
+    label: item.displayName,
+  }));
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form submitted");
-    navigate("/home/dashboard");
+
+    const form = new FormData(event.target);
+    const age = form.get("age");
+    const height = form.get("height");
+    const weight = form.get("weight");
+    // const muscleGroupValue = form.get("body");
+    const baseTrainingId = form.get("exercises");
+    const days = form.get("days");
+
+    const signUpData = JSON.parse(localStorage.getItem("signUpData"));
+
+    const finalUserData = {
+      email: signUpData.email,
+      password: signUpData.password,
+      firstName: signUpData.firstName,
+      lastName: signUpData.lastName,
+      age: parseInt(age, 10),
+      gender: sex,
+      trainingLevelId: trainingLevelId,
+      weight: parseInt(weight, 10),
+      height: parseInt(height, 10),
+      baseTrainingId: baseTrainingId,
+      // muscleGroup: muscleGroupValue,
+      daysPerWeek: parseInt(days, 10),
+    };
+
+    try {
+      await register(finalUserData);
+      localStorage.removeItem("signUpData");
+      navigate("/home/dashboard");
+    } catch (err) {
+      console.error("Registration failed", err);
+      setError("Registration failed. Please try again.");
+    }
   };
 
   useEffect(() => {
@@ -47,7 +171,7 @@ export function UserData() {
                 name="age"
                 placeholder="Enter your age"
                 className="user-data__form__input"
-                min="0"
+                min="15"
                 max="120"
                 required
               />
@@ -57,10 +181,10 @@ export function UserData() {
               <ChoicesSelect
                 name="sex"
                 value={sex}
-                onChange={e => setSex(e.target.value)}
+                onChange={(e) => setSex(e.target.value)}
                 options={[
-                  { value: "male", label: "Male" },
-                  { value: "female", label: "Female" },
+                  { value: "MALE", label: "Male" },
+                  { value: "FEMALE", label: "Female" },
                 ]}
                 required
                 placeholder="Select your gender"
@@ -97,40 +221,14 @@ export function UserData() {
           </div>
 
           <label className="user-data__form__label">
-            Injuries
+            What training level do you prefer for your workouts?
             <ChoicesSelect
-              name="injuries"
-              value={injuries}
-              onChange={e => setInjuries(e.target.value)}
-              options={[
-                { value: "none", label: "None" },
-                { value: "knee injury", label: "Knee Injury" },
-                { value: "ankle sprain", label: "Ankle Sprain" },
-                { value: "lower back pain", label: "Lower Back Pain" },
-                { value: "shoulder injury", label: "Shoulder Injury" },
-                { value: "wrist pain", label: "Wrist Pain" },
-                { value: "elbow injury", label: "Elbow Injury" },
-                { value: "hip injury", label: "Asthma" },
-                { value: "other", label: "Other" },
-              ]}
+              name="training-level"
+              value={trainingLevelId}
+              onChange={(e) => setTrainingLevelId(e.target.value)}
+              options={trainingLevelOptions}
               required
-              placeholder="Have any injuries or restrictions?"
-            />
-          </label>
-
-          <label className="user-data__form__label">
-            What intensity level do you prefer for your workouts?
-            <ChoicesSelect
-              name="intensity"
-              value={intensity}
-              onChange={e => setIntensity(e.target.value)}
-              options={[
-                { value: "light", label: "Light" },
-                { value: "moderate", label: "Moderate" },
-                { value: "intense", label: "Intense" },
-              ]}
-              required
-              placeholder="Intensity"
+              placeholder="Training level"
             />
           </label>
           <p className="user-data__form__text">
@@ -138,24 +236,11 @@ export function UserData() {
           </p>
 
           <label className="user-data__form__label">
-            How many days per week do you want to train?
-            <input
-              type="number"
-              name="days"
-              placeholder="Number of days"
-              className="user-data__form__input"
-              min="0"
-              max="7"
-              required
-            />
-          </label>
-
-          <label className="user-data__form__label">
             Which areas do you want to focus on?
             <ChoicesSelect
               name="body"
-              value={body}
-              onChange={e => setBody(e.target.value)}
+              value={muscleGroup}
+              onChange={(e) => setMuscleGroup(e.target.value)}
               options={[
                 { value: "full body", label: "Full Body" },
                 { value: "upper body", label: "Upper Body" },
@@ -165,6 +250,35 @@ export function UserData() {
               placeholder="Select your focus areas"
             />
           </label>
+
+          <label className="user-data__form__label">
+            Exercises
+            <ChoicesSelect
+              name="exercises"
+              value={exerciseValue}
+              onChange={(e) => setExerciseValue(e.target.value)}
+              options={baseTrainingOptions}
+              required
+              placeholder="Select exercises"
+            />
+          </label>
+
+          <label className="user-data__form__label">
+            How many days per week do you want to train?
+            <input
+              type="number"
+              name="days"
+              placeholder="Number of days (2 or 3)"
+              className="user-data__form__input"
+              min="2"
+              max="3"
+              value={daysPerWeek}
+              onChange={(e) => setDaysPerWeek(e.target.value)}
+              required
+            />
+          </label>
+
+          {error && <div className="user-data__form__error">{error}</div>}
 
           <button type="submit" className="user-data__form__button">
             Generate My Plan

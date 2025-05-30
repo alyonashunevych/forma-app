@@ -1,0 +1,42 @@
+.training-period {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25vw;
+  width: 100%;
+
+  grid-column: 2 / 3;
+  grid-row: 2 / 2;
+
+  &__days,
+  &__months {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 1.25vw;
+    border-radius: $border-radius;
+    background-color: $soft-white;
+    box-shadow: $box-shadow;
+
+    &__number,
+    &__text {
+      font-size: $main-text-size;
+      font-family: $main-text-font;
+      font-weight: 550;
+      color: map-get($black-translucents, 70);
+      width: 5.9vw;
+      text-align: center;
+
+      span {
+        font-size: 2vw;
+        color: black;
+      }
+    }
+
+    &__number {
+      width: min-content;
+    }
+  }
+}

@@ -33,26 +33,47 @@ export function Navigation() {
           "profile",
           "subscriptions",
           "settings",
-        ].map((item) => (
-          <NavLink
-            to={item}
-            className={({ isActive }) =>
-              isActive
-                ? `dashboard__navigation__link--${item} dashboard__navigation__link--${item}--active`
-                : `dashboard__navigation__link--${item}`
-            }
-            key={item}
-          >
-            <img
-              src={images[item]}
-              alt={`${item} icon`}
-              className="dashboard__navigation__icon"
-            />
-            <p className="dashboard__navigation__text">
-              {item === 'plan' ? 'My Plan' : (item.charAt(0).toUpperCase() + item.slice(1))}
-            </p>
-          </NavLink>
-        ))}
+        ].map((item) =>
+          item === "subscriptions" ? (
+            <div
+              key={item}
+              className={`dashboard__navigation__link--${item} dashboard__navigation__link--disabled`}
+              style={{
+                pointerEvents: "none",
+                opacity: 0.8,
+                cursor: "not-allowed",
+              }}
+            >
+              <img
+                src={images[item]}
+                alt={`${item} icon`}
+                className="dashboard__navigation__icon"
+              />
+              <p className="dashboard__navigation__text">Subscriptions</p>
+            </div>
+          ) : (
+            <NavLink
+              to={item}
+              className={({ isActive }) =>
+                isActive
+                  ? `dashboard__navigation__link--${item} dashboard__navigation__link--${item}--active`
+                  : `dashboard__navigation__link--${item}`
+              }
+              key={item}
+            >
+              <img
+                src={images[item]}
+                alt={`${item} icon`}
+                className="dashboard__navigation__icon"
+              />
+              <p className="dashboard__navigation__text">
+                {item === "plan"
+                  ? "My Plan"
+                  : item.charAt(0).toUpperCase() + item.slice(1)}
+              </p>
+            </NavLink>
+          )
+        )}
       </nav>
     </div>
   );

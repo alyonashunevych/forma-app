@@ -4,16 +4,32 @@ import logo from "../../../images/logo-black.svg";
 import google from "../../../images/google.svg";
 import apple from "../../../images/apple.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { login } from "../../utils/api/authApi";
 
 export function LogIn() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form submitted");
-    navigate("/home/dashboard");
+    setError("");
+
+    try {
+      const data = await login({ email, password });
+      console.log("Login success", data);
+
+      localStorage.setItem("token", data.jwtToken);
+
+      navigate("/home/dashboard");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Login failed. Please check your email or password.");
+    }
   };
 
   useEffect(() => {
@@ -36,19 +52,11 @@ export function LogIn() {
 
         <div className="login__continue-buttons">
           <button className="login__continue-button">
-            <img
-              src={google}
-              alt="Google logo"
-              className="login__continue-button__img"
-            />
+            <img src={google} alt="Google logo" className="login__continue-button__img" />
             Continue with Google
           </button>
           <button className="login__continue-button">
-            <img
-              src={apple}
-              alt="Apple logo"
-              className="login__continue-button__img"
-            />
+            <img src={apple} alt="Apple logo" className="login__continue-button__img" />
             Continue with Apple
           </button>
         </div>
@@ -68,6 +76,8 @@ export function LogIn() {
               placeholder="example@gmail.com"
               className="login__form__input"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
 
@@ -78,12 +88,23 @@ export function LogIn() {
               name="password"
               placeholder="••••••••"
               className="login__form__input"
-              maxlength="20"
+              maxLength={20}
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <button className="login__form__forgot">Forgot password?</button>
-          
+
+          <button className="login__form__forgot" type="button">
+            Forgot password?
+          </button>
+
+          {error && (
+            <div className="login__form__error">
+              {error}
+            </div>
+          )}
+
           <button type="submit" className="login__form__button">Log In</button>
         </form>
 
