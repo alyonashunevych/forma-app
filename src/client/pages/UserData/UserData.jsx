@@ -5,72 +5,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ChoicesSelect } from "../../components/ChoicesSelect/ChoicesSelect";
 import { register } from "../../utils/api/authApi";
-import { getBaseTrainings } from "../../utils/api/baseTrainings";
+import { getBaseTrainings } from "../../utils/api/baseTrainingsMin";
 import { getTrainingLevels } from "../../utils/api/trainingLevelApi";
+import { useUser } from "../../utils/UserContext";
 
-// const TRAINING_LEVELS = [
-//   { value: "d6ccfc2b-e1cc-4ee9-9f76-794cce1c6ae3", label: "Light" },
-//   { value: "b1e5b8e2-1b2a-4d7e-9e2e-1234567890ab", label: "Moderate" },
-//   { value: "a2f7c8d3-2c3b-5e8f-0f3f-abcdefabcdef", label: "Intense" },
-// ];
-
-// const exercisesOptions = {
-//     "full body": [
-//       {
-//         value: "fullbody1",
-//         label:
-//           "Option 1: Hip Thrust, Hip Adduction, Pull-Ups, Chest Flys, Overhead Extensions",
-//       },
-//       {
-//         value: "fullbody2",
-//         label:
-//           "Option 2: Bulgarian Split Squats, Hip Adduction, Lat Pulldowns, Chest Flys, Tricep Pushdowns",
-//       },
-//       {
-//         value: "fullbody3",
-//         label:
-//           "Option 3: Split Squats, Hip Adduction, Dumbbell Rows, Chest Flys, Tricep KickBacks",
-//       },
-//     ],
-//     "upper body": [
-//       {
-//         value: "upperbody1",
-//         label:
-//           "Option 1: Lat Pulldowns, Underhand Rows, Chest Flys, Bicep Curls, Overhead Extensions",
-//       },
-//       {
-//         value: "upperbody2",
-//         label:
-//           "Option 2: Pull-Ups, Bent Over Rows, Chest Flys, Bicep Curls, Tricep Pushdowns",
-//       },
-//       {
-//         value: "upperbody3",
-//         label:
-//           "Option 3: Lat Pullovers, Dumbbell Rows, Chest Flys, Bicep Curls, Tricep KickBacks",
-//       },
-//     ],
-//     "lower body": [
-//       {
-//         value: "lowerbody1",
-//         label:
-//           "Option 1: Hip Thrust, Bulgarian Split Squats, Romanian Deadlifts, Hip Adduction, Leg Press",
-//       },
-//       {
-//         value: "lowerbody2",
-//         label:
-//           "Option 2: Hip Thrust, Split Squats, Glute Extensions, Hip Adduction, Lying Leg Curls",
-//       },
-//       {
-//         value: "lowerbody3",
-//         label:
-//           "Option 3: Hip Thrust, Sumo Squats, KickBacks, Hip Adduction, Lying Leg Curls",
-//       },
-//     ],
-//   };
 
 export function UserData() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const [sex, setSex] = useState("");
   const [trainingLevelId, setTrainingLevelId] = useState("");
@@ -113,7 +56,6 @@ export function UserData() {
     const age = form.get("age");
     const height = form.get("height");
     const weight = form.get("weight");
-    // const muscleGroupValue = form.get("body");
     const baseTrainingId = form.get("exercises");
     const days = form.get("days");
 
@@ -130,12 +72,11 @@ export function UserData() {
       weight: parseInt(weight, 10),
       height: parseInt(height, 10),
       baseTrainingId: baseTrainingId,
-      // muscleGroup: muscleGroupValue,
       daysPerWeek: parseInt(days, 10),
     };
 
     try {
-      await register(finalUserData);
+      await register(finalUserData, setUser);
       localStorage.removeItem("signUpData");
       navigate("/home/dashboard");
     } catch (err) {

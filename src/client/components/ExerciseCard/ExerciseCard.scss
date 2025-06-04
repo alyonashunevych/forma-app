@@ -16,16 +16,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1vw;
+    justify-content: space-between;
+    width: 70%;
   }
 
   &__name,
   &__value,
-  &__key {
+  &__key,
+  &__loading {
     font-size: $main-text-size;
     font-family: $main-text-font;
     font-weight: 550;
     color: map-get($black-translucents, 70);
+    white-space: nowrap;
+    text-align: center;
+    width: 100%;
   }
 
   &__value {
@@ -34,21 +39,35 @@
     line-height: 1vw;
   }
 
+  &__key {
+    width: 100%;
+    
+  }
+
+  &__name {
+    width: auto;
+  }
+
   &__details {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    gap: 1vw;
     width: 100%;
 
     &__item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      gap: 0.3vw;
+      width: 100%;
     }
   }
 
   &__img {
-    width: 8.75vw;
+    height: 6.125vw;
     user-select: none;
   }
 

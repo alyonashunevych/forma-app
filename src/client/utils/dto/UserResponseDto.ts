@@ -9,7 +9,10 @@ export interface UserResponseDto {
   roles: RoleTypeResponseDto[];
   lastLogin: string;
   age: number;
-  weight: number;
   height: number;
+  weight: number;
   gender: string;
+  daysPerWeek: number;
+  baseTrainingName: string;
+  createdAt: string;
 }

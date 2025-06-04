@@ -1,19 +1,54 @@
-import "./MyPlan.scss";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import "./MyPlan.scss";
 
 import arrow from "../../../../images/calendar-arrow.svg";
 import doublearrow from "../../../../images/calendar-double-arrow.svg";
-import { getWorkoutDays } from "../../../utils/workoutStorage";
+import { getBaseTrainingHistory } from "../../../utils/api/baseTrainingHistory";
+import { useTraining } from "../../../utils/useTraining";
+import { startBaseTraining } from "../../../utils/api/baseTraining";
 
 export function MyPlan() {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [trainingHistory, setTrainingHistory] = useState([]);
+  const [todayWorkout, setTodayWorkout] = useState(null);
   const navigate = useNavigate();
+  const { setTrainingHistory: setContextTrainingHistory } = useTraining();
 
-  const workoutDays = getWorkoutDays();
+  const date = new Date();
+  const dateStr = date.toLocaleDateString("en-CA");
+
+  useEffect(() => {
+    async function fetchTraining() {
+      try {
+        const data = await getBaseTrainingHistory();
+        setTrainingHistory(data);
+
+        const today = data.find((w) => w.dateTime === dateStr);
+        setTodayWorkout(today);
+      } catch (error) {
+        console.error("Failed to fetch base training history", error);
+      }
+    }
+
+    fetchTraining();
+  }, [dateStr]);
+
+  const handleStartTraining = async () => {
+    try {
+      if (!todayWorkout) return;
+
+      const startedTraining = await startBaseTraining(todayWorkout.id);
+      console.log("MyPlan: trainingHistory to send", startedTraining);
+
+      setContextTrainingHistory(startedTraining);
+      navigate(`/home/plan/${dateStr}/strength/step1`);
+    } catch (error) {
+      console.error("Failed to start training:", error);
+    }
+  };
 
   return (
     <div className="plan">
@@ -51,63 +86,51 @@ export function MyPlan() {
           }
           tileClassName={({ date, view }) => {
             if (view === "month") {
-              const key = date.toLocaleDateString("en-CA");
-              const workoutDay = workoutDays[key];
+              const dateStr = date.toLocaleDateString("en-CA");
+              const dayData = trainingHistory.find(
+                (t) => t.dateTime === dateStr
+              );
 
-              if (workoutDay) {
-                const { state, type } = workoutDay;
+              if (dayData) {
+                const { trStatusDisplayName } = dayData;
 
                 const stateClasses = {
-                  completed: "day-completed",
-                  missed: "day-missed",
-                  scheduled: "day-scheduled",
+                  Completed: "day-completed",
+                  Missed: "day-missed",
+                  Planning: "day-scheduled",
+                  "In Progress": "day-in-progress",
                 };
 
-                const typeClasses = {
-                  strength: "day-strength",
-                  pilates: "day-pilates",
-                };
-
-                return `${stateClasses[state] || ""} ${
-                  typeClasses[type] || ""
-                }`.trim();
+                return `${
+                  stateClasses[trStatusDisplayName] || ""
+                } day-strength`.trim();
               }
-
-              return null;
             }
-
             return null;
           }}
           tileContent={({ date }) => {
             const dateStr = date.toLocaleDateString("en-CA");
-            const workoutDay = workoutDays[dateStr];
+            const dayData = trainingHistory.find((t) => t.dateTime === dateStr);
 
             const today = new Date();
             today.setHours(0, 0, 0, 0);
+            const isTodayOrFuture = date >= today;
 
-            if (date >= today) {
-              if (workoutDay) {
-                const type = workoutDay.type || "strength";
+            if (isTodayOrFuture) {
+              if (
+                dayData &&
+                dateStr === new Date().toLocaleDateString("en-CA") &&
+                dayData.trStatusDisplayName !== "Completed"
+              ) {
                 return (
                   <button
                     className="calendar__button calendar__button--view"
-                    onClick={() =>
-                      navigate(`/home/plan/${dateStr}/${type}/step1`)
-                    }
+                    onClick={handleStartTraining}
                   >
-                    View plan
+                    Start training
                   </button>
                 );
               }
-
-              return (
-                <button
-                  className="calendar__button calendar__button--add"
-                  onClick={() => navigate(`/home/plan/${dateStr}/add-training`)}
-                >
-                  Add training
-                </button>
-              );
             }
 
             return null;

@@ -1,67 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./ExerciseCard.scss";
-import glutebridge from "../../../images/glute-bridge.svg";
 import arrow from "../../../images/faq-arrow.svg";
+import { getLastCompletedTraining } from "../../utils/api/baseTrainingHistoryCompleted";
 
 export function ExerciseCard() {
-  const exercises = [
-    {
-      name: "Glute Bridge",
-      img: glutebridge,
-      kg: 100,
-      sets: 4,
-      reps: 8,
-    },
-    {
-      name: "Push Up",
-      img: glutebridge,
-      kg: 150,
-      sets: 3,
-      reps: 12,
-    },
-    {
-      name: "Squat",
-      img: glutebridge,
-      kg: 10,
-      sets: 3,
-      reps: 7,
-    },
-    {
-      name: "Plank",
-      img: glutebridge,
-      kg: 25,
-      sets: 4,
-      reps: 10,
-    },
-    {
-      name: "Lunges",
-      img: glutebridge,
-      kg: 42,
-      sets: 4,
-      reps: 8,
-    },
-    {
-      name: "Deadlift",
-      img: glutebridge,
-      kg: 65,
-      sets: 3,
-      reps: 9,
-    },
-  ];
-
+  const [exercises, setExercises] = useState([]);
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getLastCompletedTraining();
+
+        const formattedExercises = data.baseExToPositions.map((item) => {
+          const fourthSet = item.baseSets?.find((set) => set.position === 4);
+
+          return {
+            name: item.baseExercise.name,
+            img: item.baseExercise.miniImage,
+            kg: fourthSet?.kg ?? 0,
+            reps: fourthSet?.reps ?? 0,
+            sets: item.baseSets?.length ?? 0,
+          };
+        });
+
+        setExercises(formattedExercises);
+      } catch (error) {
+        console.error("Failed to fetch training data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   const handleNext = () => {
-    setCurrentExerciseIndex((prevIndex) =>
-      prevIndex === exercises.length - 1 ? 0 : prevIndex + 1
+    setCurrentExerciseIndex((prev) =>
+      prev === exercises.length - 1 ? 0 : prev + 1
     );
   };
 
   const handlePrev = () => {
-    setCurrentExerciseIndex((prevIndex) =>
-      prevIndex === 0 ? exercises.length - 1 : prevIndex - 1
+    setCurrentExerciseIndex((prev) =>
+      prev === 0 ? exercises.length - 1 : prev - 1
     );
   };
+
+  if (exercises.length === 0) {
+    return (
+      <div className="exercise-card">
+        <p className="exercise-card__loading">Loading exercises...</p>
+      </div>
+    );
+  }
 
   const currentExercise = exercises[currentExerciseIndex];
 

@@ -1,33 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./MyCalendar.scss";
 
 import arrow from "../../../../images/calendar-arrow.svg";
 import doublearrow from "../../../../images/calendar-double-arrow.svg";
-import { getWorkoutDays } from "../../../utils/workoutStorage";
-import { useNavigate } from "react-router-dom";
+import { getBaseTrainingHistory } from "../../../utils/api/baseTrainingHistory";
 
 export function MyCalendar() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const workoutDays = getWorkoutDays();
-  const navigate = useNavigate();
+  const [trainingHistory, setTrainingHistory] = useState([]);
 
-  const handleDayClick = (date) => {
-    const dateStr = date.toLocaleDateString("en-CA");
-    const workoutDay = workoutDays[dateStr];
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (date >= today) {
-      if (workoutDay) {
-        const type = workoutDay.type || "strength";
-        navigate(`/home/plan/${dateStr}/${type}/step1`);
-      } else {
-        navigate(`/home/plan/${dateStr}/add-training`);
-      }
+  useEffect(() => {
+    async function fetchTraining() {
+      const data = await getBaseTrainingHistory();
+      setTrainingHistory(data);
     }
-  };
+
+    fetchTraining();
+  }, [setTrainingHistory]);
 
   return (
     <div className="calendar-wrapper">
@@ -35,7 +26,6 @@ export function MyCalendar() {
         locale="en-US"
         value={selectedDate}
         onChange={setSelectedDate}
-        onClickDay={handleDayClick}
         prevLabel={
           <img
             src={arrow}
@@ -58,29 +48,27 @@ export function MyCalendar() {
         }
         tileClassName={({ date, view }) => {
           if (view === "month") {
-            const key = date.toLocaleDateString("en-CA");
-            const workoutDay = workoutDays[key];
+            const dateStr = date.toLocaleDateString("en-CA");
+            const dayData = trainingHistory.find((t) => t.dateTime === dateStr);
 
-            if (workoutDay) {
-              const { state, type } = workoutDay;
+            if (dayData) {
+              const { trStatusDisplayName } = dayData;
 
               const stateClasses = {
-                completed: "day-completed",
-                missed: "day-missed",
-                scheduled: "day-scheduled",
+                Completed: "day-completed",
+                Missed: "day-missed",
+                Planning: "day-scheduled",
+                "In Progress": "day-in-progress",
               };
 
-              const typeClasses = {
-                strength: "day-strength",
-                pilates: "day-pilates",
-              };
+              console.log(`${
+                stateClasses[trStatusDisplayName] || ""
+              } day-strength`.trim())
 
-              return `${stateClasses[state] || ""} ${
-                typeClasses[type] || ""
-              }`.trim();
+              return `${
+                stateClasses[trStatusDisplayName] || ""
+              } day-strength`.trim();
             }
-
-            return null;
           }
 
           return null;

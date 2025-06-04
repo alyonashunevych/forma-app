@@ -6,10 +6,13 @@ import apple from "../../../images/apple.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { login } from "../../utils/api/authApi";
+import { useUser } from "../../utils/UserContext";
+
 
 export function LogIn() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,10 +23,7 @@ export function LogIn() {
     setError("");
 
     try {
-      const data = await login({ email, password });
-      console.log("Login success", data);
-
-      localStorage.setItem("token", data.jwtToken);
+      await login({ email, password }, setUser);
 
       navigate("/home/dashboard");
     } catch (err) {

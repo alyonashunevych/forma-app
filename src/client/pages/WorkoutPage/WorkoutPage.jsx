@@ -11,20 +11,81 @@ import settings from "../../../images/settings.svg";
 import "./WorkoutPage.scss";
 import classNames from "classnames";
 import { useCallback, useEffect, useState } from "react";
-import {
-  changeWorkoutDay,
-  getWorkoutDay,
-  getWorkoutNumber,
-} from "../../utils/workoutStorage";
+import { getBaseTrainingHistory } from "../../utils/api/baseTrainingHistory";
+import { useTraining } from "../../utils/useTraining";
+import { finishBaseTraining } from "../../utils/api/baseTraining";
 
 export function WorkoutPage() {
   const { date } = useParams();
   const location = useLocation();
-  const workout = getWorkoutDay(date);
-  const number = getWorkoutNumber(date);
   const navigate = useNavigate();
+
+  const { trainingHistory } = useTraining();
+
+  console.log(trainingHistory.description);
+
+  const [workout, setWorkout] = useState(null);
+  const [number, setNumber] = useState(null);
+
   const [showAlertDone, setShowAlertDone] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+
+  const steps = [
+    "Cardio Warm-up",
+    "Joint Mobility",
+    "Strength Exercises",
+    "Optional Core Activation",
+    "Complete Workout",
+  ];
+
+  useEffect(() => {
+    async function fetchTraining() {
+      const data = await getBaseTrainingHistory();
+      const current = data.find((w) => w.dateTime === date);
+      setWorkout(current);
+
+      const sorted = data
+        .slice()
+        .sort((a, b) => new Date(a.dateTime) - new Date(b.dateTime));
+      const idx = sorted.findIndex((w) => w.dateTime === date);
+      setNumber(idx !== -1 ? idx + 1 : null);
+    }
+
+    if (date) fetchTraining();
+  }, [date]);
+
+  const storageKey = `isDone-${date}`;
+  const [isDone, setIsDone] = useState(() => {
+    const stored = localStorage.getItem(storageKey);
+    const parsed = stored ? JSON.parse(stored) : null;
+    if (Array.isArray(parsed) && parsed.length === steps.length - 1) {
+      return parsed;
+    }
+    return Array(steps.length - 1).fill(false);
+  });
+
+  useEffect(() => {
+    console.log("isDone", isDone);
+  }, [isDone]);
+
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(isDone));
+  }, [isDone, storageKey]);
+
+  const match = location.pathname.match(/step(\d+)/);
+  const currentStep = match ? Number(match[1]) : 1;
+
+  const areRequiredStepsDone = useCallback(() => {
+    return isDone.map((done, idx) => (idx === 3 ? true : done)).every(Boolean);
+  }, [isDone]);
+
+  const formattedDate = date
+    ? new Date(date).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "";
 
   const isToday = (() => {
     if (!date) return false;
@@ -34,30 +95,6 @@ export function WorkoutPage() {
     workoutDate.setHours(0, 0, 0, 0);
     return today.getTime() === workoutDate.getTime();
   })();
-
-  const steps = [
-    "Cardio Warm-up",
-    "Joint Mobility",
-    "Strength Exercises",
-    "Optional Core Activation",
-    "Complete Workout",
-  ];
-  const [isDone, setIsDone] = useState(Array(steps.length - 1).fill(false));
-
-  const areRequiredStepsDone = useCallback(() => {
-    return isDone.map((done, idx) => (idx === 3 ? true : done)).every(Boolean);
-  }, [isDone]);
-
-  const match = location.pathname.match(/step(\d+)/);
-  const currentStep = match ? Number(match[1]) : 1;
-
-  const formattedDate = date
-    ? new Date(date).toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      })
-    : "";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -81,13 +118,28 @@ export function WorkoutPage() {
     setTimeout(() => setShowAlert(false), 2500);
   };
 
-  function capitalizeWords(str) {
-    if (!str) return "";
-    return str
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
+  if (!workout) {
+    return (
+      <div className="workout__error">
+        Workout not found for this date.
+        <Link to="/home/plan">Back to Plan</Link>
+      </div>
+    );
   }
+
+  const handleFinishWorkout = async () => {
+    try {
+      if (!workout || !workout.id) {
+        alert("Workout ID не визначено");
+        return;
+      }
+      await finishBaseTraining(workout.id);
+      alert("Тренування завершено!");
+      navigate("/home/dashboard");
+    } catch (error) {
+      alert("Помилка при завершенні тренування: " + error.message);
+    }
+  };
 
   return (
     <div className="workout">
@@ -100,13 +152,14 @@ export function WorkoutPage() {
 
       <h1 className="workout__number">Workout №{number}</h1>
 
-      {workout.state !== 'completed' && <Link to={`./../change-training`} className="link">
-        <img src={settings} alt="settings" className="button-settings" />
-      </Link>}
+      {workout.trStatusDisplayName !== "Completed" && (
+        <Link to={`./../change-training`} className="link">
+          <img src={settings} alt="settings" className="button-settings" />
+        </Link>
+      )}
 
       <p className="workout__type">
-        {capitalizeWords(workout.type)} Training -{" "}
-        {capitalizeWords(workout.body)}
+        Strength Training: {trainingHistory.description}
       </p>
       <p className="workout__date">Scheduled for: {formattedDate}</p>
 
@@ -127,7 +180,11 @@ export function WorkoutPage() {
         </div>
       </div>
 
-      <Outlet context={{ isDone, setIsDone, currentStep }} />
+      {!trainingHistory ? (
+        <div>No training data available.</div>
+      ) : (
+        <Outlet context={{ isDone, setIsDone, currentStep }} />
+      )}
 
       <div
         className={classNames("workout__buttons", {
@@ -186,10 +243,9 @@ export function WorkoutPage() {
                 triggerAlertDone();
                 return;
               }
-              changeWorkoutDay(date, { state: "completed" });
             }}
           >
-            <button className="workout__button-done workout__button-done--step4--no">
+            <button className="workout__button-done workout__button-done--step4--no" onClick={handleFinishWorkout}>
               No, finish workout
             </button>
           </Link>

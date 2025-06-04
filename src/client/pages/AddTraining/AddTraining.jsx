@@ -59,7 +59,7 @@ export function AddTraining() {
       {
         value: "upperbody1",
         label:
-          "Option 1: Lat Pulldowns, Underhand Rows, Chest Flys, Bicep Curls, Overhead Extensions",
+          "Option 1: Lat Pulldowns, Bent Over Rows, Chest Flys, Bicep Curls, Overhead Extensions",
       },
       {
         value: "upperbody2",

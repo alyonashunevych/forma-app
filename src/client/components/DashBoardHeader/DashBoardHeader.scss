@@ -27,6 +27,15 @@
     &:hover {
       background-color: $soft-yellow-translucents;
     }
+
+    &--completed {
+      background-color: $soft-green;
+      cursor: default;
+
+      &:hover {
+        background-color: $soft-green;
+      }
+    }
   }
 
   &__emoji {

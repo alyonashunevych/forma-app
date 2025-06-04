@@ -5,7 +5,7 @@ export function Graph({ y, yTickStep = 2 }) {
   const [hovered, setHovered] = useState(null);
 
   if (!Array.isArray(y) || y.length === 0) {
-    return <div className="line">No data</div>;
+    return <div className="custom-graph__label">No data</div>;
   }
 
   const width = 220;
@@ -20,11 +20,9 @@ export function Graph({ y, yTickStep = 2 }) {
   const minY = Math.min(...y);
   const maxY = Math.max(...y);
 
-  // Знаходимо найближчі "красиві" межі для осі Y
   const yStart = Math.floor(minY / yTickStep) * yTickStep;
   const yEnd = Math.ceil(maxY / yTickStep) * yTickStep;
 
-  // Генеруємо підписи з потрібним кроком
   const yTicks = [];
   for (let v = yStart; v <= yEnd; v += yTickStep) {
     yTicks.push(v);

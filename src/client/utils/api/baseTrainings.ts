@@ -1,7 +1,7 @@
 import httpClient from "./httpClient";
-import { BaseTrainingMinResponseDto } from "../dto/BaseTrainingMinResponseDto";
+import { BaseTrainingResponseDto } from "../dto/BaseTrainingResponseDto";
 
-export const getBaseTrainings = async (): Promise<BaseTrainingMinResponseDto[]> => {
-  const response = await httpClient.get<BaseTrainingMinResponseDto[]>("/base-trainings/min");
+export const getBaseTrainings = async (): Promise<BaseTrainingResponseDto[]> => {
+  const response = await httpClient.get<BaseTrainingResponseDto[]>("/base-trainings");
   return response.data;
 };

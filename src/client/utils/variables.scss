@@ -32,6 +32,7 @@ $soft-red-translucents: #e5b3a57f;
 $soft-blue: #BCC2D4;
 $soft-orange: #F0DBA0;
 $soft-purple: #D3BDE3;
+$soft-pink:#FEB5EC;
 
 $bg-color: #eaeaea;
 $bg-color-translucent: #eaeaea87;
@@ -52,7 +53,3 @@ $title-font-italic: "Condiment", sans-serif;
 
 $transition: all 0.4s;
 
-@mixin transition-transform($value) {
-  transition: transform 0.3s;
-  transform: $value;
-}

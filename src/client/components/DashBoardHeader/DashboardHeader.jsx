@@ -2,30 +2,54 @@ import "./DashBoardHeader.scss";
 import training from "../../../images/training.svg";
 import hand from "../../../images/hand.png";
 import { useNavigate } from "react-router-dom";
-import {
-  getNextWorkout,
-  getWorkoutDays,
-  getWorkoutNumber,
-} from "../../utils/workoutStorage";
+import { useEffect, useState } from "react";
+import { useTraining } from "../../utils/useTraining";
+import { startBaseTraining } from "../../utils/api/baseTraining";
+import { getBaseTrainingHistory } from "../../utils/api/baseTrainingHistory";
 
 export function DashboardHeader() {
+  const { setTrainingHistory } = useTraining();
+  const navigate = useNavigate();
+  const [todayWorkout, setTodayWorkout] = useState(null);
+  const [workoutNumber, setWorkoutNumber] = useState(null);
+
   const date = new Date();
   const dateStr = date.toLocaleDateString("en-CA");
   const currentMonth = date.toLocaleString("en-US", { month: "long" });
   const currentDate = `${currentMonth} ${date.getDate()}, ${date.getFullYear()}`;
-  const nextWorkout = getNextWorkout();
-  const number = nextWorkout ? getWorkoutNumber(nextWorkout.dateStr) : null;
-  const navigate = useNavigate();
 
-  const workoutDays = getWorkoutDays();
-  const todayWorkout = workoutDays[dateStr];
-  const type = todayWorkout?.type;
+  useEffect(() => {
+    async function fetchTraining() {
+      try {
+        const data = await getBaseTrainingHistory();
+        const today = data.find((w) => w.dateTime === dateStr);
+        setTodayWorkout(today);
 
-  const handleStartTraining = () => {
-    if (todayWorkout) {
-      navigate(`/home/plan/${dateStr}/${type}/step1`);
-    } else {
-      navigate(`/home/plan/${dateStr}/add-training`);
+        const sorted = [...data].sort(
+          (a, b) => new Date(a.dateTime) - new Date(b.dateTime)
+        );
+        const idx = sorted.findIndex((w) => w.dateTime === dateStr);
+        if (idx !== -1) setWorkoutNumber(idx + 1);
+      } catch (err) {
+        console.error("Failed to fetch base training history", err);
+      }
+    }
+
+    fetchTraining();
+  }, [dateStr]);
+
+  const handleStartTraining = async () => {
+    try {
+      if (!todayWorkout) return;
+
+      const startedTraining = await startBaseTraining(todayWorkout.id);
+      console.log("DashboardHeader: trainingHistory to send", startedTraining);
+
+      setTrainingHistory(startedTraining);
+
+      navigate(`/home/plan/${dateStr}/strength/step1`);
+    } catch (error) {
+      console.error("Failed to start training:", error);
     }
   };
 
@@ -46,26 +70,34 @@ export function DashboardHeader() {
       </div>
 
       <div className="dashboard__header__information">
-        <p className="dashboard__header__information__item">Today is </p>
+        <p className="dashboard__header__information__item">Today is</p>
         <p className="dashboard__header__information__value">{currentDate}</p>
       </div>
 
       <div className="dashboard__header__information">
-        <p className="dashboard__header__information__item">Workout </p>
-        <p className="dashboard__header__information__value">№{number} </p>
+        <p className="dashboard__header__information__item">Workout</p>
+        <p className="dashboard__header__information__value">
+          №{workoutNumber ?? "—"}
+        </p>
       </div>
 
-      <button
-        className="dashboard__header__button"
-        onClick={handleStartTraining}
-      >
-        Start Training
-        <img
-          src={training}
-          alt={`training icon`}
-          className="dashboard__navigation__icon"
-        />
-      </button>
+      {todayWorkout && todayWorkout.trStatusDisplayName !== "Completed" ? (
+        <button
+          className="dashboard__header__button"
+          onClick={handleStartTraining}
+        >
+          Start Training
+          <img
+            src={training}
+            alt="training icon"
+            className="dashboard__navigation__icon"
+          />
+        </button>
+      ) : (
+        <button className="dashboard__header__button dashboard__header__button--completed" disabled>
+          Training Completed
+        </button>
+      )}
     </header>
   );
 }

@@ -110,8 +110,8 @@
 
       &__day {
         &--neighboringMonth {
-          background-color: transparent;
-          color: map-get($black-translucents, 20);
+          background-color: transparent !important;
+          color: map-get($black-translucents, 20) !important;
         }
       }
     }
@@ -136,13 +136,16 @@
 
 .user-profile .day {
   &-scheduled {
-    background-color: $soft-yellow;
+    background-color: $soft-yellow !important;
   }
   &-completed {
-    background-color: $soft-green;
+    background-color: $soft-green !important;
   }
   &-missed {
     background-color: $soft-red;
+  }
+  &-in-progress {
+    background-color: $soft-pink !important;
   }
   &-strength {
     box-shadow: 0 0 0 0.25vw $bright-blue;

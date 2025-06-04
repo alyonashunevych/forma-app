@@ -83,7 +83,6 @@
       }
 
       &--active {
-        background-color: $bright-yellow !important;
         color: black;
 
         &:hover {
@@ -151,16 +150,19 @@
 
   .day {
     &-scheduled {
-      background-color: $soft-yellow;
+      background-color: $soft-yellow !important;
     }
     &-completed {
-      background-color: $soft-green;
+      background-color: $soft-green !important;
     }
     &-missed {
       background-color: $soft-red;
     }
     &-strength {
       border: 0.7vw solid $bright-blue;
+    }
+    &-in-progress {
+      background-color: $soft-pink !important;
     }
 
     &-pilates {

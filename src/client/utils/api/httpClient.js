@@ -11,7 +11,8 @@ httpClient.interceptors.request.use((config) => {
   if (
     !config.url.endsWith("/auth/login") &&
     !config.url.endsWith("/auth/registration") &&
-    !config.url.endsWith("/base-trainings/min")
+    !config.url.endsWith("/base-trainings/min") &&
+    !config.url.endsWith("/training-level")
   ) {
     const token = localStorage.getItem("token");
     if (token) {

@@ -135,7 +135,7 @@
       }
     }
 
-    &__forgot {
+    &__forgot, &__error {
       all: unset;
       font-family: $main-text-font;
       font-size: $main-text-size;
@@ -146,6 +146,14 @@
 
       &:hover {
         color: map-get($black-translucents, 70);
+      }
+    }
+
+    &__error {
+      color: $bright-red;
+
+      &:hover {
+        color: $bright-red;
       }
     }
 
