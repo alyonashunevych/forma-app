@@ -130,14 +130,13 @@ export function WorkoutPage() {
   const handleFinishWorkout = async () => {
     try {
       if (!workout || !workout.id) {
-        alert("Workout ID не визначено");
+        alert("Workout ID not defined");
         return;
       }
       await finishBaseTraining(workout.id);
-      alert("Тренування завершено!");
-      navigate("/home/dashboard");
+      alert("Training is complete!");
     } catch (error) {
-      alert("Помилка при завершенні тренування: " + error.message);
+      alert("Error when completing training: " + error.message);
     }
   };
 

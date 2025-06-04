@@ -6,12 +6,14 @@ import { useEffect, useState } from "react";
 import { useTraining } from "../../utils/useTraining";
 import { startBaseTraining } from "../../utils/api/baseTraining";
 import { getBaseTrainingHistory } from "../../utils/api/baseTrainingHistory";
+import { useUser } from "../../utils/UserContext";
 
 export function DashboardHeader() {
   const { setTrainingHistory } = useTraining();
   const navigate = useNavigate();
   const [todayWorkout, setTodayWorkout] = useState(null);
   const [workoutNumber, setWorkoutNumber] = useState(null);
+  const { user } = useUser();
 
   const date = new Date();
   const dateStr = date.toLocaleDateString("en-CA");
@@ -57,7 +59,7 @@ export function DashboardHeader() {
     <header className="dashboard__header">
       <div className="dashboard__header__title">
         <h1 className="dashboard__header__title__text">
-          Hello, Alyona!
+          Hello, {user.firstName}!
           <img
             className="dashboard__header__emoji"
             src={hand}

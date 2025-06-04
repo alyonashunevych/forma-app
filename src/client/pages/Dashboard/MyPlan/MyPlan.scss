@@ -187,7 +187,7 @@
       display: grid;
       grid-auto-flow: column;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr;
       width: fit-content;
       gap: 0.62vw;
 
@@ -224,6 +224,9 @@
         &--purple {
           background-color: $bright-purple;
         }
+        &--pink {
+        background-color: $soft-pink;
+      }
       }
     }
   }

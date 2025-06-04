@@ -97,4 +97,26 @@
       }
     }
   }
+
+  &__save {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $border-radius;
+    background: $dark-blue;
+    padding: 0.94vw 0;
+    font-family: $main-text-font;
+    font-size: $main-text-size;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 550;
+    margin-top: 1vw;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+
+    &:hover {
+      background: map-get($dark-blue-translucents, 80);
+    }
+  }
 }

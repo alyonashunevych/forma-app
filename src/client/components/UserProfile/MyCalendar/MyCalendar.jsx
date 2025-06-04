@@ -82,6 +82,10 @@ export function MyCalendar() {
           <p className="calendar-wrapper__information__title">Scheduled</p>
         </div>
         <div className="calendar-wrapper__information__box">
+          <div className="calendar-wrapper__information__color calendar-wrapper__information__color--pink"></div>
+          <p className="calendar-wrapper__information__title">In progress</p>
+        </div>
+        <div className="calendar-wrapper__information__box">
           <div className="calendar-wrapper__information__color calendar-wrapper__information__color--green"></div>
           <p className="calendar-wrapper__information__title">Completed</p>
         </div>

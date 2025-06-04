@@ -77,13 +77,12 @@ export default function ExerciseTable({ baseSets, onSave, id }) {
 
     try {
       const result = await patchBaseTraining(id, dataToSave);
-      console.log("Результат з серверу:", result);
       if (onSave) {
         onSave(result);
       }
-      alert("Результати успішно збережено");
+      alert("Results saved successfully");
     } catch (error) {
-      alert("Помилка при збереженні результатів: " + error.message);
+      alert("Error saving results: " + error.message);
     }
   };
 
@@ -139,8 +138,8 @@ export default function ExerciseTable({ baseSets, onSave, id }) {
         ))}
       </div>
 
-      <button className="save-button" onClick={handleSave}>
-        Зберегти результати
+      <button className="exercise-table__save" onClick={handleSave}>
+        Save
       </button>
     </div>
   );
